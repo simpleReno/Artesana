@@ -7,6 +7,10 @@ class Order:
     def __init__(self, order_id, order_items: List[Item]):
         self.order_id = order_id
         self.order_items = order_items
+        self.status = "open"
+        self.payment = None
+        self.table = None
+        self.total = self.total()
 
     def total(self) -> Decimal:
         return sum([item.total() for item in self.order_items], Decimal(0))
