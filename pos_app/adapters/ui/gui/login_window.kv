@@ -1,0 +1,67 @@
+<LoginWindow>:
+    on_enter: username_input.focus = True
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.2, 0.2, 1  
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [self.width * 0.3, self.height * 0.3]
+        
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            spacing: 10
+            size_hint: (0.6, 0.4)
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.95, 0.95, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+
+            Label:
+                text: "Login"
+                font_size: 24
+                color: 0, 0, 0, 1
+
+            TextInput:
+                id: username_input
+                hint_text: "User"
+                multiline: False
+                padding_y: (dp(10), dp(10))
+                size_hint: (1, None)
+                height: dp(40)
+
+            TextInput:
+                id: password_input
+                hint_text: "Password"
+                multiline: False
+                password: True
+                padding_y: (dp(10), dp(10))
+                size_hint: (1, None)
+                height: dp(40)
+                on_focus: if self.focus: root.show_decimal_keyboard()
+
+            Button:
+                text: "Login"
+                size_hint: (1, None)
+                height: dp(40)
+                background_normal: ''
+                background_color: 0.2, 0.6, 0.8, 1
+                on_press: 
+                    root.login()
+                    username_input.text = ""
+                    password_input.text = ""
