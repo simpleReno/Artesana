@@ -1,22 +1,14 @@
-# Description: Item model class.
-from decimal import Decimal
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 
-class Item:
-    def __init__(self, item_id: int, name: str, price: Decimal):
-        self.item_id = item_id
-        self.name = name
-        self.price = price
+Base = declarative_base()
 
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, Item):
-            return False
-        return self.name == other.name and self.price == other.price
+class Item(Base):
+    __tablename__ = 'items'
 
-    def __hash__(self) -> int:
-        return hash((self.name, self.price))
-
-    def __repr__(self) -> str:
-        return f"Item(name={self.name}, price={self.price})"
-    
-    def __str__(self) -> str:
-        return f"{self.name} - {self.price}"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    price = Column(Float)
+    category_id = Column(Integer, ForeignKey('categories.id'))
+    category = relationship('Category', back_populates='items')
