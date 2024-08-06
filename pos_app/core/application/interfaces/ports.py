@@ -17,9 +17,30 @@ class OrderRepository(ABC):
     @abstractmethod
     def get_all(self):
         pass
+    
+    @abstractmethod
+    def delete(self, order):
+        pass
 
 # Service interfaces
 class PaymentGateway(ABC):
     @abstractmethod
     def process_payment(self, payment):
+        pass
+    
+class OrderService(ABC):
+    @abstractmethod
+    def create_order(self, order):
+        pass
+    
+    @abstractmethod
+    def get_order(self, order_id):
+        pass
+    
+    @abstractmethod
+    def get_all_orders(self):
+        pass
+    
+    @abstractmethod
+    def delete_order(self, order):
         pass
