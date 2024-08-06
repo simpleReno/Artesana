@@ -1,0 +1,75 @@
+<DecimalKeyboardPopup>:
+    size_hint: 0.5, 0.5
+    auto_dismiss: False
+    title: "Agregue una cantidad"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: text_input
+            text: ""
+            size_hint: 1, .2
+        GridLayout:
+            id: keyboard_layout
+            cols: 3
+            spacing: dp(5)
+            padding: dp(10)
+            Button:
+                text: "1"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+
+            Button:
+                text: "2"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+
+            Button:
+                text: "3"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+            Button:
+                text: "4"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+             
+            Button:
+                text: "5"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+                
+            Button:
+                text: "6"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+               
+            Button:
+                text: "7"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+               
+            Button:
+                text: "8"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+                
+            Button:
+                text: "9"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+
+            Button:
+                text: "Delete"
+                size_hint: 1, 1
+                on_press: root.on_delete_button_click()
+                
+            Button:
+                text: "0"
+                size_hint: 1, 1
+                on_press: root.on_button_click(self)
+
+        Button:
+            text: "Cerrar"
+            size_hint_y: None
+            height: '48dp'
+            on_press: root.dismiss()
+                                
