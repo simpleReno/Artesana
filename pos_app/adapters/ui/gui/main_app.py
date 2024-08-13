@@ -1,21 +1,13 @@
 import os
-import kivy
 from dotenv import load_dotenv
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.widget import Widget
 from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelHeader, TabbedPanelItem
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
-from kivy.properties import ObjectProperty
 from kivy.lang.builder import Builder
-from kivy.uix.behaviors import ButtonBehavior
 from kivy.metrics import dp
 
 load_dotenv()
@@ -69,6 +61,14 @@ class MainWindow(Screen):
         if self.ids.tabbed_panel2.tab_list:
                 self.ids.tabbed_panel2.switch_to(self.ids.tabbed_panel2.tab_list[0])
             
+class MenuScreen(Screen):
+    pass
+class OrderScreen(Screen):
+     pass
+
+class AccountScreen(Screen):
+    pass
+
 class PinKeyboard(Screen):
     def on_button_click(self, button):
         self.ids.text_output.text += button.text
@@ -93,14 +93,7 @@ class PinKeyboard(Screen):
         else: 
             show_popup("Invalid PIN", "OK")
             self.ids.text_output.text = ""
-class MenuScreen(Screen):
-    pass
-class OrderScreen(Screen):
-     pass
-
-class AccountScreen(Screen):
-    pass
-
+            
 class DecimalKeyboardPopup(Popup):
     def on_button_click(self, button):
         self.ids.text_input.text += button.text
