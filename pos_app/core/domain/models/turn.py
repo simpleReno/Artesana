@@ -1,21 +1,17 @@
 from datetime import datetime
 
-class Turn():
+class Turn:
     def __init__(self, 
                  turn_id: int,
                  employee_id: int, 
-                 turn_date: datetime, 
-                 turn_start: datetime, 
-                 turn_end: datetime, 
-                 turn_status: str = "Scheduled"):
+                 turn_date: datetime):
         self.turn_id = turn_id
         self.employee_id = employee_id
         self.turn_date = turn_date
-        self.turn_start = turn_start
-        self.turn_end = turn_end
-        self.turn_status = turn_status
-        self.turn_services = []
-        self.turn_products = []
+        self.turn_end = None
+        self.turn_status = ""
+
+   
         self.turn_total = 0
         
     def add_service(self, service) -> None:
