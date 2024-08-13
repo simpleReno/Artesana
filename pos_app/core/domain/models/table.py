@@ -1,5 +1,4 @@
-from typing import Any, List
-from pos_app.core.domain.models.status import Status
+from typing import List
 from pos_app.core.domain.models.order import Order
 
 class Table:
