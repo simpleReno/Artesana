@@ -1,89 +1,153 @@
 <MainWindow>:
     on_enter: root.populate_tabs()
     canvas.before:
+
         Color:
             rgba: 0.2, 0.2, 0.2, 1  
+
         Rectangle:
             pos: self.pos
             size: self.size
 
     BoxLayout:
         orientation: "vertical"
+        padding: dp(3)
         canvas.before:
+
             Color:
                 rgba: 1, 1, 1, 1  
+
             Rectangle:
                 pos: self.pos
                 size: self.size
+
         BoxLayout:
             orientation: "horizontal"
-            size_hint: 1, .1 
+            size_hint: 1, .1
+            padding: dp(3)
+            spacing: dp(5)
+
+
             Button:
                 text: "go back"
-                size_hint: .2, None
+                size_hint: .2, 1
                 on_release: 
-                    app.root.current = "login"
+                    app.root.current = "pin"
                     root.manager.transition.direction = "right"
             Label:
                 text: "Artesana"
                 color: 1, 93, 0, 1
-                size_hint: .6, None
+                size_hint: .6, 1
                 
             Button:
-                text: "logout"
-                size_hint: .2, None
-                on_release: 
-                    app.root.current = "login"
+                text: "Menu"
+                size_hint: .1, 1
+                on_release:  root.ids.screen_manager.current = "menu"
+
+            Button:
+                text: "Order"
+                size_hint: .1, 1
+                on_release: root.ids.screen_manager.current = "order"
+
+            Button:
+                text: "Account"
+                size_hint: .1, 1
+                on_release: root.ids.screen_manager.current = "account"
       
         BoxLayout:
             orientation: "horizontal"
+            padding: dp(3)
+
             BoxLayout:
                 size_hint: .25, 1
                 orientation: "vertical"
+                padding: dp(3)
+
                 ScrollView:
-                    canvas.before:
-                        Color:
-                            rgba: 1, 1, 1, 1  
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-                    size_hint: 1, .8
                     do_scroll_x: False
+
                     BoxLayout:
                         orientation: "vertical"
                         size_hint_y: None
                         height: self.minimum_height
-                        spacing: dp(5)
                         id: order_stack
                     
                 GridLayout:
                     cols: 2
                     size_hint: 1, .2
+                    spacing: dp(5)
+
                     Button:
-                        size_hint: .5, None
+                        background_normal: ''
+                        background_color: 0.2, 0.6, 0.8, 1
+                        size_hint: .5, 1
                         text:"Edit"
                         on_press: root.check_to_cancel()
                             
-                        
                     Button:
-                        size_hint: .5, None
+                        background_normal: ''
+                        background_color: .68, .62, .14, 1
+                        size_hint: .5, 1
                         text:"Charge"
                         on_press: root.check_to_submit()
 
                     Button:
-                        size_hint: .5, None
+                        background_normal: ''
+                        background_color: .65, .12, .2, 1
+                        size_hint: .5, 1
                         text:"Cancel"
                         on_press: root.check_to_cancel()
-                            
-                        
+                             
                     Button:
-                        size_hint: .5, None
+                        background_normal: ''
+                        background_color: .14, .68, .19, 1
+                        size_hint: .5, 1
                         text:"Add"
                         on_press: root.check_to_submit()
-            
             BoxLayout:
                 orientation: "vertical"
-                size_hint: .85, 1
+                ScreenManager:
+                    id: screen_manager
+                    MenuScreen:
+                        name: "menu"
+                        TabbedPanel:
+                            id: tabbed_panel
+                            tab_pos: 'top_mid'
+                            padding: dp(3)
+                            do_default_tab: False
+
+                    OrderScreen:
+                        name: "order"
+                        BoxLayout:
+                            padding: dp(3)
+                            canvas.before:
+                                Color:
+                                    rgba: .17, .18, .17, 1 
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                            Label:
+                                text: "orders"
+                                color: 1, 93, 0, 1
+
+
+                    AccountScreen:
+                        name: "account"
+                        BoxLayout:
+                            padding: dp(3)
+                            canvas.before:
+                                Color:
+                                    rgba: .17, .18, .17, 1  
+
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                            Label:
+                                text: "accounts"  
+                                color: 1, 93, 0, 1            
+
                 TabbedPanel:
-                    id: tabbed_panel
+                    id: tabbed_panel2
+                    tab_pos: 'top_mid'
+                    padding: dp(3)
                     do_default_tab: False
