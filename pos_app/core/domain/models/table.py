@@ -1,14 +1,24 @@
-# Description: Table model.
+from typing import Any, List
+from pos_app.core.domain.models.status import Status
+from pos_app.core.domain.models.order import Order
+
 class Table:
-    def __init__(self, id: int, number: int, seats: int, status: str):
-        self.id = id
+    def __init__(self, number: int):
         self.number = number
-        self.seats = seats
-        self.status = status
-        self.subTables = []
+        self.seats = 0
+        self.orders = 0
         
-    def add_sub_table(self, table) -> None:
-        self.subTables.append(table)
+    def set_seats(self, seats: int) -> None:
+        self.seats = seats
+        
+    def get_seats(self) -> int:
+        return self.seats
+    
+    def get_orders(self) -> List[Order]:
+        return self.orders
+    
+    def add_order(self, order: Order) -> None:
+        self.orders.append(order)
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Table):
