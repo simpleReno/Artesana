@@ -5,6 +5,7 @@ from typing import Any
 from dotenv import load_dotenv
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.status import Status
+from pos_app.core.domain.models.payment import Payment
 
 load_dotenv()
 
@@ -53,7 +54,7 @@ class Order:
         return self.payment
         
     def set_payment(self, payment: str) -> None:
-        self.payment = payment
+        self.payment = Payment(payment)
         
     def get_table(self) -> str:
         return self.table
