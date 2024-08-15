@@ -22,6 +22,7 @@
             padding_y: [self.height / 2 - (self.line_height / 2), 0]
             font_size: self.width * 0.1 
             on_text: self.text = self.text.upper()
+            on_parent: self.focus = True
 
         BoxLayout:
             orientation: "vertical"
@@ -195,7 +196,9 @@
                 spacing: dp(5)
                 Button:
                     text: "Go back"
-                    on_press: root.on_go_back_button_click()
+                    on_press: 
+                        root.on_go_back_button_click()
+                        root.manager.transition.direction = "right"
                 Button:
                     text: "Enter"
                     on_press: root.check_pin()
