@@ -29,3 +29,6 @@ class Table:
 
     def __repr__(self) -> str:
         return f"<Table {self.id}>"
+    
+    def __str__(self) -> str:
+        return f"Table {self.id}"
