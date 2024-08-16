@@ -7,7 +7,7 @@ class TableEntity(Base):
     __tablename__ = 'Tables'
     
     id = Column(String, primary_key= True, unique= True)
-    orders_id = Column(Integer, ForeignKey('orders.id'))
+    orders_id = Column(String, ForeignKey('orders.id'))
     order = relationship('Orders', back_populates='tables')
     
 Base.metadata.create_all(bind=engine)

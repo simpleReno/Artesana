@@ -6,9 +6,9 @@ from pos_app.adapters.database.sqlite_adapter.connection import Base, engine
 class PaymentEntity(Base):
     __tablename__ = 'Payments'
 
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(String, primary_key=True, unique=True)
     payment_type = Column(String)
-    order_id = Column(Integer, ForeignKey('orders.id'))
+    order_id = Column(String, ForeignKey('orders.id'))
     order = relationship('Orders', back_populates= 'payments')
     payment_amount = Column(Float, ForeignKey('Orders.total'))
     amount = relationship('Orders', back_populates= 'payments')
