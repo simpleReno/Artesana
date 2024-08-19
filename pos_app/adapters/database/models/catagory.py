@@ -11,5 +11,4 @@ class CategoryEntity(Base):
     product = relationship('Products', back_populates= 'categories')
     description = Column(String)
  
-    
 Base.metadata.create_all(bind=engine)
