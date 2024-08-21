@@ -1,18 +1,18 @@
+import uuid
 from datetime import datetime
+from pos_app.core.domain.models.employee import Employee
 
 class Turn:
-    def __init__(self, 
-                 turn_id: int,
-                 employee_id: int, 
-                 turn_date: datetime):
-        self.turn_id = turn_id
-        self.employee_id = employee_id
+    def __init__(self, turn_date: datetime):
+        self.turn_id = uuid.uuid4()
+        self.employees = {}
         self.turn_date = turn_date
         self.turn_end = None
         self.turn_status = ""
-
-   
         self.turn_total = 0
+        
+    def add_employee(self, employee: Employee):
+        self.employees[employee.__hash__()] = employee
         
     def add_service(self, service) -> None:
         self.turn_services.append(service)
