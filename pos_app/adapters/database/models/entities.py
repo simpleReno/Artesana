@@ -17,7 +17,7 @@ class TableEntity(Base):
     orders: Mapped[List["OrderEntity"]] = relationship(back_populates='TableEntity')
 
 class OrderEntity(Base):
-    __tablename__ = 'Orders'
+    __tablename__ = 'orders'
 
     id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
     products: Mapped[List["ProductEntity"]] = relationship(back_populates= 'OrderEntity')
