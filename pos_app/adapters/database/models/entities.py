@@ -56,6 +56,7 @@ class EmployeeEntity(Base):
     pin: Mapped[str] = mapped_column(unique=True, nullable=False)
     roles: Mapped[List["RoleEntity"]] = relationship(secondary=employee_role, back_populates = 'EmployeeEntity')
     turns: Mapped[List["TurnEntity"]] = relationship(secondary=employee_turn, back_populates = 'EmployeeEntity')
+    payments: Mapped[List["PaymentEntity"]] = relationship(secondary=payment_employee, back_populates = 'EmployeeEntity')
     start_date: Mapped[DateTime]
     stop_date: Mapped[DateTime]
     
@@ -76,18 +77,21 @@ class TurnEntity(Base):
     end_time: Mapped[DateTime] 
     employees: Mapped[List["EmployeeEntity"]] = relationship(secondary=employee_turn, back_populates = 'TurnEntity')
     roles: Mapped[List["RoleEntity"]] = relationship(secondary=role_turn, back_populates = 'TurnEntity')
+    payments: Mapped[List["PaymentEntity"]] = relationship(secondary=payment_turn, back_populates = 'TurnEntity')
     
 class PaymentEntity(Base):
     __tablename__ = 'payments'
 
-    id: Mapped[str] = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
     payment_type: Mapped[str]
-    orders: Mapped[list["OrderEntity"]] = relationship(secondary=payment_order, back_populates= 'PaymentEntity')
     total: Mapped[Float]
     percentage: Mapped[Float]
-    date: Mapped[DateTime] = Column(DateTime, default=func.now())
-    employee_turn_id: Mapped[str] = Column(ForeignKey('turns.id'), nullable=False)
-    employee_turn: Mapped[TurnEntity] = relationship(back_populates= 'PaymentEntity')
+    date: Mapped[DateTime] = mapped_column(default=func.now())
+    orders: Mapped[list["OrderEntity"]] = relationship(secondary=payment_order, back_populates= 'PaymentEntity')
+    turn_id: Mapped[str] = mapped_column(ForeignKey('turns.id'), nullable=False)
+    turn: Mapped[TurnEntity] = relationship(back_populates= 'PaymentEntity')
+    employee_id: Mapped[str] = mapped_column(ForeignKey('employees.id'), nullable=False)
+    employee: Mapped[EmployeeEntity] = relationship(back_populates= 'PaymentEntity')
 
  
 Base.metadata.create_all(bind=engine)
