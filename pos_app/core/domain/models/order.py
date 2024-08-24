@@ -10,39 +10,40 @@ from pos_app.core.domain.models.payment import Payment
 load_dotenv()
 
 class Order:
-    def __init__(self, order_products: dict[Product]):
-        self.order_id = uuid.uuid4()
+    def __init__(self, products: dict[Product]):
+        self.id = uuid.uuid4()
         self.order_type = ""
-        self.order_products = order_products
+        self.products = products
         self.status = Status("open")
         self.payment = None
-        self.total = 0
+        self.total = Decimal(0)
 
     def to_dict(self) -> dict:
             return {
-                "order_id": self.order_id,
-                "order_products": [product.to_dict() for product in self.order_products],
+                "id": self.order_id,
+                "products": {product.id: product.to_dict() for product in self.products},
                 "status": self.status,
                 "payment": self.payment,
                 "table": self.table,
                 "total": self.total
             }
             
-    def get_order_type(self) -> str:
+    def get_type(self) -> str:
         return self.order_type
 
-    def set_order_type(self, order_type: str) -> None:
+    def set_type(self, order_type: str) -> None:
         if order_type not in os.getenv("ORDER_TYPES").split(","):
             raise ValueError("Invalid order type")
         self.order_type = order_type
 
     def add_product(self, product: Product) -> None:
-        self.order_products.append(product)
-        self.total = self.total()
+        self.products[product.__hash__()] = product
+        self.set_total()
         
     def remove_product(self, product: Product) -> None:
-        self.order_products.remove(product)
-        self.total = self.total()
+        if product.__hash__() in self.products:
+            del self.products[product.__hash__()]
+        self.set_total()
         
     def get_status(self) -> str:
         return self.status
@@ -55,32 +56,24 @@ class Order:
         
     def set_payment(self, payment: str) -> None:
         self.payment = Payment(payment)
-        
-    def get_table(self) -> str:
-        return self.table
-    
-    def set_table(self, table: str) -> None:
-        self.table = table
     
     def get_total(self) -> Decimal:
         return self.total
     
     def set_total(self) -> None:
-        self.total = sum([item.total() for item in self.order_products], Decimal(0))
-        
-    
-    
+        self.total = sum([item.total() for item in self.products], Decimal(0))
+
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Order):   
-            return self.order_id == other.order_id
+            return self.id == other.id
         return NotImplemented
 
     def __hash__(self) -> int:
         return hash(self.order_id)
 
     def __repr__(self) -> str:
-        return f"Order(order_id={self.order_id}, order_products={self.order_products})"
+        return f"Order(id={self.id}, products={self.products})"
 
     def __str__(self) -> str:
-        return f"Order {self.order_id}"
+        return f"Order {self.id}"

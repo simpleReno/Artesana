@@ -7,7 +7,7 @@ class Product:
         self.id = uuid.uuid4()
         self.name = name
         self.price = price
-        self.amount = 0
+        self.amount = amount
         self.last_time_added = datetime.datetime
         
     def to_dict(self) -> dict:

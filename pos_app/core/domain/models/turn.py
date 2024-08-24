@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from decimal import Decimal
 from pos_app.core.domain.models.employee import Employee
 
 class Turn:
@@ -9,10 +10,25 @@ class Turn:
         self.turn_date = turn_date
         self.turn_end = None
         self.turn_status = ""
-        self.turn_total = 0
+        self.total = Decimal(0)
+        
+    def to_dict(self) -> dict:
+        return {
+            "id": self.turn_id,
+            "employees": {employee.id: employee.to_dict() for employee in self.employees},
+            "date": self.date,
+            "end": self.end,
+            "status": self.status,
+            "total": self.total
+        }
         
     def add_employee(self, employee: Employee):
         self.employees[employee.__hash__()] = employee
+        
+    def remove_employee(self, employee: Employee):
+        if employee.__hash__() in self.employees:
+            del self.employees[employee.__hash__()]
+        self.set_total()
         
     def add_service(self, service) -> None:
         self.turn_services.append(service)

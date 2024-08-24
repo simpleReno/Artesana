@@ -7,28 +7,34 @@ load_dotenv()
 
 class Status:
     def __init__(self):
-        self.status_name = ""
+        self.name = ""
         self.last_time_changed = None
         
-    def set_status_name(self, status_name: str) -> None:
-        if status_name not in os.getenv("STATUS_TYPES").split(","):
+    def to_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "last_time_changed": self.last_time_changed
+        }
+        
+    def set_name(self, name: str) -> None:
+        if name not in os.getenv("STATUS_TYPES").split(","):
             raise ValueError("Invalid status")
-        self.status_name = status_name
+        self.name = name
         self.last_time_changed = datetime.datetime.now()
         
-    def get_status_name(self) -> str:
-        return self.status_name
+    def get_name(self) -> str:
+        return self.name
     
     def get_last_time_changed(self) -> datetime.datetime:
         return self.last_time_changed
     
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Status):
-            return self.status_name == other.status_name
+            return self.name == other.name
         return NotImplemented
     
     def __repr__(self) -> str:
-        return f"Status(status_name={self.status_name}, last_time_changed={self.last_time_changed})"
+        return f"Status(name={self.name}, last_time_changed={self.last_time_changed})"
     
     def __str__(self) -> str:
-        return f"Status {self.status_name}"
+        return f"Status {self.name}"
