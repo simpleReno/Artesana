@@ -1,4 +1,11 @@
 from abc import ABC, abstractmethod
+from pos_app.core.domain.models.order import Order
+from pos_app.core.domain.models.product import Product
+from pos_app.core.domain.models.table import Table
+from pos_app.core.domain.models.turn import Turn
+from pos_app.core.domain.models.payment import Payment
+from pos_app.core.domain.models.employee import Employee
+
 
 """_summary_
     This module contains the interfaces for the repository of the application.
@@ -10,15 +17,15 @@ from abc import ABC, abstractmethod
 ############################################################################################################
 class OrderRepository(ABC):
     @abstractmethod
-    def save(self, order):
+    def save(self, order: Order):
         pass
 
     @abstractmethod
-    def get(self, order_id):
+    def get(self, order_id: str):
         pass
     
     @abstractmethod
-    def update(self, order_id, order):
+    def update(self, order_id: str, order: Order):
         pass
 
     @abstractmethod
@@ -26,20 +33,20 @@ class OrderRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, order):
+    def delete(self, order_id: str):
         pass
 ############################################################################################################
 class ProductRepository(ABC):
     @abstractmethod
-    def save(self, product):
+    def save(self, product: Product):
         pass
     
     @abstractmethod
-    def get(self, product_id):
+    def get(self, product_id: str):
         pass
     
     @abstractmethod
-    def update(self, product_id, product):
+    def update(self, product_id: str, product: Product):
         pass
     
     @abstractmethod
@@ -47,20 +54,20 @@ class ProductRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, product):
+    def delete(self, product_id: str):
         pass
 ############################################################################################################    
 class TableRepository(ABC):
     @abstractmethod
-    def save(self, table):
+    def save(self, table: Table):
         pass
     
     @abstractmethod
-    def get(self, table_id):
+    def get(self, table_id: str):
         pass
     
     @abstractmethod
-    def update(self, table_id, table):
+    def update(self, table_id: str, table: Table):
         pass
     
     @abstractmethod
@@ -68,20 +75,20 @@ class TableRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, table):
+    def delete(self, table_id: str):
         pass
 ############################################################################################################
 class CategoryRepository(ABC):
     @abstractmethod
-    def save(self, category):
+    def save(self, category: dict):
         pass
     
     @abstractmethod
-    def get(self, category_id):
+    def get(self, category_id: str):
         pass
     
     @abstractmethod
-    def update(self, category_id, category):
+    def update(self, category_id: str, category: dict):
         pass
     
     @abstractmethod
@@ -89,20 +96,20 @@ class CategoryRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, category):
+    def delete(self, category: dict):
         pass
 ############################################################################################################
 class EmployeeRepository(ABC):
     @abstractmethod
-    def save(self, employee):
+    def save(self, employee: Employee):
         pass
     
     @abstractmethod
-    def get(self, employee_id):
+    def get(self, employee_id: str):
         pass
     
     @abstractmethod
-    def update(self, employee_id, employee):
+    def update(self, employee_id: str, employee: Employee):
         pass
     
     @abstractmethod
@@ -110,20 +117,20 @@ class EmployeeRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, employee):
+    def delete(self, employee_id: str):
         pass
 ############################################################################################################
 class RoleRepository(ABC):
     @abstractmethod
-    def save(self, role):
+    def save(self, role: dict):
         pass
     
     @abstractmethod
-    def get(self, role_id):
+    def get(self, role_id: str):
         pass
     
     @abstractmethod
-    def update(self, role_id, role):
+    def update(self, role_id, role: dict):
         pass
     
     @abstractmethod
@@ -131,20 +138,20 @@ class RoleRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, role):
+    def delete(self, role_id: str):
         pass
 ############################################################################################################
 class TurnRepository(ABC):
     @abstractmethod
-    def save(self, turn):
+    def save(self, turn: Turn):
         pass
     
     @abstractmethod
-    def get(self, turn_id):
+    def get(self, turn_id: str):
         pass
     
     @abstractmethod
-    def update(self, turn_id, turn):
+    def update(self, turn_id, turn: Turn):
         pass
     
     @abstractmethod
@@ -152,16 +159,16 @@ class TurnRepository(ABC):
         pass
     
     @abstractmethod
-    def delete(self, turn):
+    def delete(self, turn_id: str):
         pass
 ############################################################################################################
 class PaymentRepository(ABC):
     @abstractmethod
-    def save(self, payment):
+    def save(self, payment: Payment):
         pass
     
     @abstractmethod
-    def get(self, payment_id):
+    def get(self, payment_id: str):
         pass
     
     @abstractmethod
