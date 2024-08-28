@@ -2,39 +2,54 @@ import os
 import datetime
 import uuid
 from typing import Any
+from decimal import Decimal
 from dotenv import load_dotenv
+from pos_app.core.domain.models.order import Order
 
 load_dotenv()
 
 class Payment:
-    def __init__(self):
+    def __init__(self, payment_type: str, orders: dict[Order]):
         self.id = uuid.uuid4()
-        self.amount = 0
-        self.payment_type = ""
+        self.type = payment_type
+        self.amount_payed = Decimal(0)
+        self.orders = orders
+        self.total = sum([order.total for order in orders], Decimal(0))
         self.date = datetime.datetime.now()
-        
-    def to_dict(self) -> dict:  
+
+        # Add products from each order to the products dictionary
+        for order in orders.values():
+            for product in order.products.values():
+                self.products[product.id] = product
+    
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
-            "amount": self.amount,
-            "payment_type": self.payment_type,
-            "date": self.date
+            "type": self.type,
+            "amount_payed": self.amount_payed,
+            "orders": {order.id: order.to_dict() for order in self.orders},
+            "total": self.total,
+            "date": self.date,
         }
-        
-    def set_payment_amount(self, amount: float) -> None:
-        self.amount = amount
-        
-    def get_payment_amount(self) -> float:
-        return self.amount
     
-    def set_payment_type(self, payment_type: str) -> None:
+    def get_products(self) -> dict:
+        products = {}
+        for order in self.orders.values():
+            for product in order.products.values():
+                products[product.id] = product
+        return products
+        
+    def get_type(self) -> str:
+        return self.type
+    
+    def set_type(self, payment_type: str) -> None:
         if payment_type not in os.getenv("PAYMENT_TYPES").split(","):
             raise ValueError("Invalid payment type")
-        self.payment_type = payment_type
-    
-    def get_payment_date(self) -> datetime.datetime:
-        return self.date
-    
+        self.type = payment_type
+        
+    def get_total(self) -> Decimal:
+        return self.total
+        
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Payment):
             return self.id == other.id

@@ -9,14 +9,17 @@ class Product:
         self.price = price
         self.amount = amount
         self.last_time_added = datetime.datetime
-        
+        self.category = ""
+    
     def to_dict(self) -> dict:
         return {
             "id": self.id,
             "name": self.name,
             "price": self.price,
+            "description": self.description,
             "amount": self.amount,
-            "last_time_added": self.last_time_added
+            "last_time_added": self.last_time_added,
+            "category": self.category
         }
         
     def get_id(self) -> int:
@@ -33,6 +36,12 @@ class Product:
     
     def set_price(self, price: float) -> None:
         self.price = price
+        
+    def get_description(self) -> str:
+        return self.description
+    
+    def set_description(self, description: str) -> None:
+        self.description = description
     
     def get_amount(self) -> int:
         return self.amount
@@ -45,6 +54,12 @@ class Product:
     
     def set_last_time_added(self, date_time: datetime.datetime) -> None:
         self.last_time_added = date_time
+        
+    def get_category(self) -> str:
+        return self.category
+    
+    def set_category(self, category: str) -> None:
+        self.category = category
         
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Product):

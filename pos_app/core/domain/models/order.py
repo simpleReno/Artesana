@@ -12,15 +12,19 @@ load_dotenv()
 class Order:
     def __init__(self, products: dict[Product]):
         self.id = uuid.uuid4()
-        self.order_type = ""
+        self.name = ""
+        self.type = ""
         self.products = products
         self.status = Status("open")
-        self.payment = None
+        self.payments = []
+        self.table = ""
         self.total = Decimal(0)
 
     def to_dict(self) -> dict:
             return {
                 "id": self.order_id,
+                "name": self.name,
+                "type": self.order_type,
                 "products": {product.id: product.to_dict() for product in self.products},
                 "status": self.status,
                 "payment": self.payment,
@@ -52,17 +56,16 @@ class Order:
         self.status = Status(status)
         
     def get_payment(self) -> str:
-        return self.payment
+        return self.payments
         
     def set_payment(self, payment: str) -> None:
-        self.payment = Payment(payment)
+        self.payments.append(Payment(payment))
     
     def get_total(self) -> Decimal:
         return self.total
     
     def set_total(self) -> None:
         self.total = sum([item.total() for item in self.products], Decimal(0))
-
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Order):   

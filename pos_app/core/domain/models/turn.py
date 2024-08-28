@@ -2,23 +2,30 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 from pos_app.core.domain.models.employee import Employee
+from pos_app.core.domain.models.role import Role
+from pos_app.core.domain.models.payment import Payment
 
 class Turn:
-    def __init__(self, turn_date: datetime):
+    def __init__(self, turn_start: datetime, turn_end: datetime):
         self.turn_id = uuid.uuid4()
-        self.employees = {}
-        self.turn_date = turn_date
-        self.turn_end = None
+        self.start_time = turn_start
+        self.end_time = turn_end
         self.turn_status = ""
+        self.employees = {}
+        self.roles = {}
+        self.payments = {}
         self.total = Decimal(0)
-        
+
+
     def to_dict(self) -> dict:
         return {
             "id": self.turn_id,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "status": self.turn_status,
             "employees": {employee.id: employee.to_dict() for employee in self.employees},
-            "date": self.date,
-            "end": self.end,
-            "status": self.status,
+            "roles": {role.id: role.to_dict() for role in self.roles},
+            "payments": {payment.id: payment.to_dict() for payment in self.payments},
             "total": self.total
         }
         
@@ -30,12 +37,58 @@ class Turn:
             del self.employees[employee.__hash__()]
         self.set_total()
         
-    def add_service(self, service) -> None:
-        self.turn_services.append(service)
+    def add_role(self, role: Role):
+        self.roles[role.__hash__()] = role
+        
+    def remove_role(self, role: Role):
+        if role.__hash__() in self.roles:
+            del self.roles[role.__hash__()]
+        self.set_total()
+        
+    def add_payment(self, payment: Payment):
+        self.payments[payment.__hash__()] = payment
+        self.set_total()
+        
+    def remove_payment(self, payment: Payment):
+        if payment.__hash__() in self.payments:
+            del self.payments[payment.__hash__()]
+        self.set_total()
+        
+    def set_total(self):
+        self.total = Decimal(0)
+        for payment in self.payments:
+            self.total += payment.amount
+            
+    def get_start_time(self) -> datetime:
+        return self.start_time
     
-    def add_product(self, product) -> None:
-        self.turn_products.append(product)
-
+    def set_start_time(self, start_time: datetime) -> None:
+        self.start_time = start_time
+        
+    def get_end_time(self) -> datetime:
+        return self.end_time
+    
+    def set_end_time(self, end_time: datetime) -> None:
+        self.end_time = end_time
+        
+    def get_status(self) -> str:
+        return self.turn_status
+    
+    def set_status(self, status: str) -> None:
+        self.turn_status = status
+        
+    def get_employees(self) -> dict[str, str]:
+        return self.employees
+    
+    def get_roles(self) -> dict[str, str]:
+        return self.roles
+    
+    def get_payments(self) -> dict[str, str]:
+        return self.payments
+    
+    def get_total(self) -> Decimal:
+        return self.total
+    
     def __eq__(self, other) -> bool:
         if not isinstance(other, Turn):
             return False
