@@ -5,7 +5,6 @@ from pos_app.adapters.database.psql_adapter.connection import Base, engine
 from pos_app.adapters.database.models.associations import employee_role, employee_turn, role_turn, payment_order, payment_employee, payment_turn
 
 
-
 class TableEntity(Base):
     __tablename__ = 'tables'
     
@@ -15,11 +14,15 @@ class TableEntity(Base):
     status: Mapped[str] = mapped_column(index= True)
     
     orders: Mapped[List["OrderEntity"]] = relationship(back_populates='TableEntity')
+    
+    total: Mapped[float] = mapped_column(nullable= False)
 
 class OrderEntity(Base):
     __tablename__ = 'orders'
 
     id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
+    name: Mapped[str] = mapped_column(str(100))
+    type: Mapped[str] = mapped_column(str(100))
     products: Mapped[List["ProductEntity"]] = relationship(back_populates= 'OrderEntity')
     payments: Mapped[List["PaymentEntity"]] = relationship(secondary=payment_order, back_populates= 'OrderEntity')
     
@@ -27,11 +30,12 @@ class OrderEntity(Base):
     table: Mapped[TableEntity] = relationship(back_populates= 'OrderEntity')
     
     status: Mapped[str]
-    total: Mapped[float] 
+    total: Mapped[float]
 
 class CategoryEntity(Base):
     __tablename__ = 'categories'
 
+    id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
     name: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
     product: Mapped[list["ProductEntity"]] = relationship(back_populates= 'CategoryEntity')
     description: Mapped[str]
@@ -41,6 +45,7 @@ class ProductEntity(Base):
 
     id: Mapped[str] = mapped_column(primary_key=True, unique= True, index=True, nullable=False)
     name: Mapped[str] = mapped_column(unique=True)
+    amount: Mapped[int] = mapped_column()
     price: Mapped[Float] = mapped_column()
     description: Mapped[str] = mapped_column()
     category_id: Mapped[str] = mapped_column(ForeignKey('categories.id'), nullable=False)
@@ -74,11 +79,27 @@ class TurnEntity(Base):
 
     id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
     start_time: Mapped[DateTime]
-    end_time: Mapped[DateTime] 
+    end_time: Mapped[DateTime]
     employees: Mapped[List["EmployeeEntity"]] = relationship(secondary=employee_turn, back_populates = 'TurnEntity')
     roles: Mapped[List["RoleEntity"]] = relationship(secondary=role_turn, back_populates = 'TurnEntity')
     payments: Mapped[List["PaymentEntity"]] = relationship(secondary=payment_turn, back_populates = 'TurnEntity')
+
+class BillEntity(Base):
+    __tablename__ = 'bills'
     
+    id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
+    total: Mapped[Float]
+    date: Mapped[DateTime] = mapped_column(default=func.now())
+    orders: Mapped[list["OrderEntity"]] = relationship(back_populates= 'BillEntity')
+    table_id: Mapped[str] = mapped_column(ForeignKey('tables.id'), nullable=False)
+    table: Mapped[TableEntity] = relationship(back_populates= 'BillEntity')
+    turn_id: Mapped[str] = mapped_column(ForeignKey('turns.id'), nullable=False)
+    turn: Mapped[TurnEntity] = relationship(back_populates= 'BillEntity')
+    employee_id: Mapped[str] = mapped_column(ForeignKey('employees.id'), nullable=False)
+    employee: Mapped[EmployeeEntity] = relationship(back_populates= 'BillEntity')
+    
+    
+
 class PaymentEntity(Base):
     __tablename__ = 'payments'
 
@@ -92,6 +113,20 @@ class PaymentEntity(Base):
     turn: Mapped[TurnEntity] = relationship(back_populates= 'PaymentEntity')
     employee_id: Mapped[str] = mapped_column(ForeignKey('employees.id'), nullable=False)
     employee: Mapped[EmployeeEntity] = relationship(back_populates= 'PaymentEntity')
+    bill_id: Mapped[str] = mapped_column(ForeignKey('bills.id'), nullable=False)
+    bill: Mapped[BillEntity] = relationship(back_populates= 'PaymentEntity')
+    bill_amount: Mapped[Float]
+    bill_total: Mapped[Float]
+    
+class UserEntity(Base):
+    __tablename__ = 'users'
 
+    id: Mapped[str] = mapped_column(primary_key=True, unique=True, index=True, nullable=False)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str] = mapped_column()
+    employee_id: Mapped[str] = mapped_column(ForeignKey('employees.id'), nullable=False)
+    employee: Mapped[EmployeeEntity] = relationship(back_populates= 'UserEntity')
+    turns: Mapped[List["TurnEntity"]] = relationship(secondary=employee_turn, back_populates= 'UserEntity')
+    roles: Mapped[List["RoleEntity"]] = relationship(secondary=employee_role, back_populates= 'UserEntity')
  
 Base.metadata.create_all(bind=engine)

@@ -42,15 +42,15 @@ class MainWindow(Screen):
     def populate_tabs(self):
         for i in range(1, 6):
             box = BoxLayout(orientation='vertical')
-            label = Label(text=f'Tab {i}')
-            tab = TabbedPanelItem(text=f'Tab {i}')
+            label = Label(text=f'Drinks {i}')
+            tab = TabbedPanelItem(text=f'Beers {i}')
             box.add_widget(label)
             tab.add_widget(box)
             self.ids.tabbed_panel.add_widget(tab)
             
             box2 = BoxLayout(orientation='vertical')
-            label2 = Label(text=f'Tab {i}')
-            tab2 = TabbedPanelItem(text=f'Tab {i}')
+            label2 = Label(text=f'Table {i}')
+            tab2 = TabbedPanelItem(text=f'Sections {i}')
             box.add_widget(label2)
             tab.add_widget(box2)
             self.ids.tabbed_panel2.add_widget(tab2)

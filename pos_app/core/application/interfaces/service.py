@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 from pos_app.core.domain.models.order import Order
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.table import Table
@@ -18,24 +19,49 @@ from pos_app.core.domain.models.payment import Payment
 ############################################################################################################
 class OrderService(ABC):
     @abstractmethod
-    def create_order(self, order: Order):
+    def create_order(self, table_id: str, order: Order) -> Order:
         pass
     
     @abstractmethod
-    def edit_order(self, order_id: str, order: Order):
+    def update_order(self, order_id: str, order: Order) -> Order:
         pass
     
     @abstractmethod
-    def get_order(self, order_id: str):
+    def split_order(self, table_id: str, order_id: str, order: Order, selected_products: List[Product]) -> List[Order]:
         pass
     
     @abstractmethod
-    def get_all_orders(self):
+    def get_order(self, order_id: str) -> Order:
         pass
     
     @abstractmethod
-    def delete_order(self, order_id: str):
+    def get_all_orders(self) -> List[Order]:
         pass
+    
+    @abstractmethod
+    def delete_order(self, order_id: str) -> None:
+        pass
+    
+    @abstractmethod
+    def close_order(self, order_id: str) -> None:
+        pass
+    
+    @abstractmethod
+    def cancel_order(self, order_id: str) -> None:
+        pass
+    
+    @abstractmethod
+    def add_product(self, order_id: str, product: Product) -> Order:
+        pass
+    
+    @abstractmethod
+    def remove_product(self, order_id: str, product_id: str) -> Order:
+        pass
+    
+    @abstractmethod
+    def add_payment(self, order_id: str, payment: Payment) -> Order:
+        pass
+    
 ############################################################################################################
 class ProductService(ABC):
     @abstractmethod
@@ -47,7 +73,7 @@ class ProductService(ABC):
         pass
     
     @abstractmethod
-    def get_product(self, product_id: Product):
+    def get_product(self, product_id: str):
         pass
     
     @abstractmethod
@@ -55,8 +81,9 @@ class ProductService(ABC):
         pass
     
     @abstractmethod
-    def delete_product(self, product_id: Product):
+    def delete_product(self, product_id: str):
         pass
+
 ############################################################################################################
 class TableService(ABC):
     @abstractmethod
