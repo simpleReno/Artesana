@@ -1,0 +1,297 @@
+##############################################################################################
+# DesktopApp
+##############################################################################################
+MainWindow:
+##############################################################################################
+# Widgets
+##############################################################################################
+<NavigationRailItem>
+    MDNavigationRailItemIcon:
+        icon: root.icon
+    MDNavigationRailItemLabel:
+        text: root.text
+<NavigationDrawerItem>
+    MDNavigationDrawerItemLeadingIcon:
+        icon: root.icon
+    MDNavigationDrawerItemText:
+        text: root.text
+<ProductCard>
+    padding: dp(10)
+    size_hint: None, None
+    size: dp(240), dp(240)
+    MDRelativeLayout:
+        MDIconButton:
+            icon: root.icon
+            pos_hint: {"top": 1, "right": 1}
+        MDLabel:
+            text: root.text
+            adaptive_size: True 
+            color: "grey"
+            pos: dp(12), dp(12)
+            bold: True
+##############################################################################################
+# MainWindow
+##############################################################################################
+<MainWindow>
+    mg_bg_color: app.theme_cls.backgroundColor
+##############################################################################################
+#(1) NavigationLayout - Main
+##############################################################################################
+    MDNavigationLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(10)
+        MDScreenManager:
+            MDScreen:
+                MDBoxLayout:
+                    orientation: 'vertical'
+##############################################################################################
+#(5) TopAppBar
+##############################################################################################        
+                    MDTopAppBar:
+                        id: top_app_bar
+                        type: "small"
+                        MDTopAppBarLeadingButtonContainer:
+                            MDActionTopAppBarButton:
+                                icon: "menu"
+                                on_release: app.root.ids.nav_drawer.set_state()   
+                        MDTopAppBarTitle:
+                            id: title
+                            text: "La Artesana"
+                        MDTopAppBarTrailingButtonContainer:                 
+                            MDActionTopAppBarButton:
+                                icon: "account-circle-outline"
+                                on_release: app.switch_theme_style() 
+##############################################################################################
+#(5) Second Box Layout - NavigationRail
+##############################################################################################        
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+##############################################################################################
+#(6) NavigationRail
+##############################################################################################
+                        MDNavigationRail:
+                            id: nav_rail
+                            type: "labeled"
+                            md_bg_color: app.theme_cls.backgroundColor
+                            NavigationRailItem:
+                                icon: "home"
+                                text: "Home"
+                                screen: "home"
+                                on_touch_down: 
+                                    app.switch_screen(self.screen) if self.collide_point(*args[1].pos) else False
+                            NavigationRailItem:
+                                icon: "account"
+                                text: "Profile"
+                                screen: "profile"
+                                on_touch_down: 
+                                    app.switch_screen(self.screen) if self.collide_point(*args[1].pos) else False  
+                            NavigationRailItem:
+                                icon: "cart"
+                                text: "Cart"
+                                screen: "cart"
+                                on_touch_down: 
+                                    app.switch_screen(self.screen) if self.collide_point(*args[1].pos) else False
+                            NavigationRailItem:
+                                icon: "history"
+                                text: "History"
+                                screen: "history"
+                                on_touch_down: 
+                                    app.switch_screen(self.screen) if self.collide_point(*args[1].pos) else False
+                            NavigationRailItem:
+                                icon: "logout"
+                                text: "Logout"
+                                screen: "logout"
+                                on_touch_down: 
+                                    app.switch_screen(self.screen) if self.collide_point(*args[1].pos) else False
+##############################################################################################
+#(6) Third Box Layout - Content
+##############################################################################################
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            md_bg_color: app.theme_cls.backgroundColor
+                            padding: dp(10)
+##############################################################################################
+#(7) Text Field
+##############################################################################################
+                            MDBoxLayout:
+                                orientation: 'horizontal'
+                                size_hint: 1, None
+                                md_bg_color: app.theme_cls.backgroundColor
+                                MDTextField:
+                                    size_hint: 0.6, None
+                                    mode: "outlined"
+                                    MDTextFieldLeadingIcon:
+                                        icon: "magnify"
+                                    MDTextFieldHintText:
+                                        text: "Search"
+                                    MDTextFieldTrailingIcon:
+                                        icon: "information"
+##############################################################################################
+#(8) Utility Icons
+##############################################################################################
+                                MDBoxLayout:
+                                    orientation: 'horizontal'
+                                    size_hint: 0.4, None
+                                    spacing: dp(10)
+                                    MDLabel:
+                                        text: ""
+                                    MDIconButton:
+                                        icon: "bell"
+                                        theme_text_color: "Primary"
+                                    MDLabel:
+                                        text: ""
+                                    MDIconButton:
+                                        icon: "cart"
+                                        theme_text_color: "Primary"
+                                    MDLabel:
+                                        text: ""
+##############################################################################################
+#(8) Inner Screen Manager
+##############################################################################################
+                            MDScreenManager:
+                                id: screen_manager
+
+                                ScreenHome:
+                                    id: home
+                                    name: "home"
+                                ScreenProfile:
+                                    id: profile
+                                    name: "profile"
+                                ScreenCart:
+                                    id: cart
+                                    name: "cart"
+                                ScreenHistory:
+                                    id: history
+                                    name: "history"
+                                ScreenLogout:
+                                    id: logout
+                                    name: "logout"
+##############################################################################################
+# Screen - Home
+##############################################################################################
+##############################################################################################
+#(2) NavigationDrawer
+##############################################################################################
+        MDNavigationDrawer:
+            id: nav_drawer
+            md_bg_color: app.theme_cls.backgroundColor
+            radius: 0, dp(16), dp(16), 0
+            MDNavigationDrawerMenu:
+                MDNavigationDrawerLabel:
+                    text: "Menu"
+##############################################################################################
+                NavigationDrawerItem:
+                    icon: "clock"
+                    text: "Clock In/Out"
+##############################################################################################
+                MDNavigationDrawerDivider:
+##############################################################################################
+                NavigationDrawerItem:
+                    icon: "store"
+                    text: "Inventory"
+                NavigationDrawerItem:
+                    icon: "bookshelf"
+                    text: "Reports"
+                NavigationDrawerItem:
+                    icon: "calendar-account"
+                    text: "Payroll"
+##############################################################################################
+                MDNavigationDrawerDivider:
+##############################################################################################
+                NavigationDrawerItem:
+                    icon: "account-key"
+                    text: "Manage"
+                NavigationDrawerItem:
+                    icon: "tools"
+                    text: "Settings"
+##############################################################################################
+                MDNavigationDrawerDivider: 
+##############################################################################################
+##############################################################################################
+# Inner Screens - NavigationRail
+##############################################################################################
+##############################################################################################
+# Home Screen - NavigationRail
+##############################################################################################
+<ScreenHome>
+    MDBoxLayout:
+        orientation: 'horizontal'
+##############################################################################################
+#(3) RecycleView - Product View
+##############################################################################################
+        MDRecycleView:
+            id: rv
+            key_viewclass: 'viewclass'
+            size_hint: 0.6, 1
+            MDRecycleGridLayout:
+                cols: 3
+                spacing: dp(10)
+                padding: dp(10)
+                default_size: dp(120), dp(120)
+                size_hint_y: None
+                height: self.minimum_height
+        MDDivider:
+            orientation: "vertical"
+        MDLabel:
+            size_hint: 0.4, 1
+            text: "Welcome to Home Screen"
+            halign: "center"
+            theme_text_color: "Primary"
+##############################################################################################
+# Profile Screen - NavigationRail
+##############################################################################################
+<ScreenProfile>
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "Profile"
+            halign: "center"
+            theme_text_color: "Primary"
+        MDLabel:
+            text: "Welcome to Profile Screen"
+            halign: "center"
+            theme_text_color: "Primary"
+##############################################################################################
+# Cart Screen - NavigationRail
+##############################################################################################
+<ScreenCart>
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "Cart"
+            halign: "center"
+            theme_text_color: "Primary"
+        MDLabel:
+            text: "Welcome to Cart Screen"
+            halign: "center"
+            theme_text_color: "Primary"
+##############################################################################################
+# History Screen - NavigationRail
+##############################################################################################
+<ScreenHistory>
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "History"
+            halign: "center"
+            theme_text_color: "Primary"
+        MDLabel:
+            text: "Welcome to History Screen"
+            halign: "center"
+            theme_text_color: "Primary"
+##############################################################################################
+# Logout Screen - NavigationRail
+##############################################################################################
+<ScreenLogout>
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: "Logout"
+            halign: "center"
+            theme_text_color: "Primary"
+        MDLabel:
+            text: "Welcome to Logout Screen"
+            halign: "center"
+            theme_text_color: "Primary"
+            
