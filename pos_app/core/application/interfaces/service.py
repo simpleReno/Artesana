@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from decimal import Decimal
 from typing import List
 from pos_app.core.domain.models.order import Order
 from pos_app.core.domain.models.product import Product
@@ -17,9 +18,9 @@ from pos_app.core.domain.models.payment import Payment
 # to interact with the database.
 
 ############################################################################################################
-class OrderService(ABC):
+class IOrderService(ABC):
     @abstractmethod
-    def create_order(self, table_id: str, order: Order) -> Order:
+    def create_order(self, order: Order) -> Order:
         pass
     
     @abstractmethod
@@ -62,8 +63,12 @@ class OrderService(ABC):
     def add_payment(self, order_id: str, payment: Payment) -> Order:
         pass
     
+    @abstractmethod
+    def get_total(self, order_id: str) -> Decimal:
+        pass
+    
 ############################################################################################################
-class ProductService(ABC):
+class IProductService(ABC):
     @abstractmethod
     def create_product(self, product: Product):
         pass
@@ -85,7 +90,7 @@ class ProductService(ABC):
         pass
 
 ############################################################################################################
-class TableService(ABC):
+class ITableService(ABC):
     @abstractmethod
     def create_table(self, table: Table):
         pass
@@ -106,7 +111,7 @@ class TableService(ABC):
     def delete_table(self, table_id: str):
         pass
 ############################################################################################################
-class EmployeeService(ABC):
+class IEmployeeService(ABC):
     @abstractmethod
     def create_employee(self, employee: Employee):
         pass
@@ -127,7 +132,7 @@ class EmployeeService(ABC):
     def delete_employee(self, employee_id: str):
         pass
 ############################################################################################################
-class CategoryService(ABC):
+class ICategoryService(ABC):
     @abstractmethod
     def create_category(self, category: dict):
         pass
@@ -148,7 +153,7 @@ class CategoryService(ABC):
     def delete_category(self, category_id: str):
         pass
 ############################################################################################################
-class RoleService(ABC):
+class IRoleService(ABC):
     @abstractmethod
     def create_role(self, role: dict):
         pass
@@ -169,7 +174,7 @@ class RoleService(ABC):
     def delete_role(self, role_id: str):
         pass
 ############################################################################################################
-class TurnService(ABC):
+class ITurnService(ABC):
     @abstractmethod
     def create_turn(self, turn: Turn):
         pass
@@ -190,7 +195,7 @@ class TurnService(ABC):
     def delete_turn(self, turn_id: str):
         pass
 ############################################################################################################
-class PaymentService(ABC):
+class IPaymentService(ABC):
     @abstractmethod
     def create_payment(self, payment: Payment):
         pass

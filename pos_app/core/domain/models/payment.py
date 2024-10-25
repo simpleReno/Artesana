@@ -4,30 +4,43 @@ import uuid
 from typing import Any
 from decimal import Decimal
 from dotenv import load_dotenv
-from pos_app.core.domain.models.order import Order
-
+from sqlalchemy import Column, String, Float, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from pos_app.core.domain.models.base import Base, payment_order
 load_dotenv()
 
-class Payment:
-    def __init__(self, payment_type: str, orders: dict[Order]):
-        self.id = uuid.uuid4()
-        self.type = payment_type
-        self.amount_payed = Decimal(0)
-        self.orders = orders
-        self.total = sum([order.total for order in orders], Decimal(0))
-        self.date = datetime.datetime.now()
+class Payment(Base):
+    __tablename__ = 'payments'
 
-        # Add products from each order to the products dictionary
-        for order in orders.values():
-            for product in order.products.values():
-                self.products[product.id] = product
+    id_ = Column("id", String, primary_key=True, unique=True, index=True, nullable=False)
+    payment_type = Column("payment_type", String)
+    payed = Column("payed", Float)
+    date = Column("date", DateTime)
+    orders = relationship('Order', secondary=payment_order, back_populates='payments')
+    turn_id = Column("turn_id", String, ForeignKey('turns.id'), nullable=False)
+    turn = relationship('Turn', back_populates='payments')
+    employee_id = Column("employee_id", String, ForeignKey('employees.id'), nullable=False)
+    employee = relationship('Employee', back_populates='payments')
+    bill_id = Column("bill_id", String, ForeignKey('bills.id'), nullable=False)
+    bill = relationship('Bill', back_populates='payments')
+    bill_amount = Column("bill_amount", Float)
+    bill_total = Column("bill_total", Float)
+    
+    def __init__(self, payment_type: str, orders: dict[str, dict], order_total: Decimal):
+        self.id_ = uuid.uuid4().hex()
+        self.type = payment_type
+        self.payed = Decimal(0)
+        self.date = datetime.datetime.now()
+        self.orders = {order[id]: order for order in orders.items()}
+        self.total = order_total
+        self.date = datetime.datetime.now()
     
     def to_dict(self) -> dict:
         return {
-            "id": self.id,
+            "id": self.id_,
             "type": self.type,
-            "amount_payed": self.amount_payed,
-            "orders": {order.id: order.to_dict() for order in self.orders},
+            "payed": self.payed,
+            "orders": self.orders,
             "total": self.total,
             "date": self.date,
         }
@@ -36,7 +49,7 @@ class Payment:
         products = {}
         for order in self.orders.values():
             for product in order.products.values():
-                products[product.id] = product
+                products[product["id"]] = product
         return products
         
     def get_type(self) -> str:
@@ -52,14 +65,14 @@ class Payment:
         
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Payment):
-            return self.id == other.id
+            return self.id_ == other.id_
         return NotImplemented
     
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash(self.id_)
     
     def __repr__(self) -> str:
-        return f"Payment(id={self.id}, amount={self.amount}, date={self.date})"
+        return f"Payment(id={self.id_}, amount={self.amount}, date={self.date})"
     
     def __str__(self) -> str:
-        return f"Payment {self.id}"
+        return f"Payment {self.id_}"

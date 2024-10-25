@@ -1,11 +1,22 @@
 import uuid
 from decimal import Decimal
 from typing import List
+from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy.orm import relationship
 from pos_app.core.domain.models.order import Order
 
 class Table:
+    __tablename__ = 'tables'
+
+    id_ = Column("id" ,String, primary_key=True, unique=True, index=True, nullable=False)
+    name = Column("name",String, unique=True)
+    seats = Column("seats", Integer)
+    orders = relationship('Order', back_populates='tables')
+    status = Column("status", String)
+    total = Column("total", Float)
+    
     def __init__(self, number: str):
-        self.id = uuid.uuid4()
+        self.id_ = uuid.uuid4()
         self.number = number
         self.seats = 0
         self.orders = {}
@@ -14,12 +25,12 @@ class Table:
         
     def to_dict(self) -> dict:
         return {
-            "id": self.id,
+            "id": self.id_,
             "number": self.number,
             "seats": self.seats,
-            "orders": {order.id: order.to_dict() for order in self.orders},
+            "orders": self.orders,
             "status": self.status,
-            "total": self.total
+            "total": float(self.total)
         }
         
     def set_seats(self, seats: int) -> None:
@@ -54,18 +65,13 @@ class Table:
     def __eq__(self, other) -> bool:
         if not isinstance(other, Table):
             return False
-        return self.id == other.id
+        return self.id_ == other.id_
 
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash(self.id_)
 
     def __repr__(self) -> str:
-        return f"<Table(id={self.id}, 
-                        number={self.number},
-                        seats={self.seats},
-                        status={self.status},
-                        orders={len(self.orders)},
-                        total={self.total})>"
+        return f"<Table(id={self.id_}, number={self.number},seats={self.seats},status={self.status},orders={len(self.orders)}, total={self.total})>"
     
     def __str__(self) -> str:
-        return f"Table {self.id}"
+        return f"Table {self.id_}"

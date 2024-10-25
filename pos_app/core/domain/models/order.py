@@ -3,34 +3,50 @@ import uuid
 from decimal import Decimal
 from typing import Any
 from dotenv import load_dotenv
+from sqlalchemy import Column, String, Enum, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.status import Status
-from pos_app.core.domain.models.payment import Payment
-
+from pos_app.core.domain.models.base import Base, payment_order
 load_dotenv()
 
-class Order:
-    def __init__(self, products: dict[Product]):
-        self.id = uuid.uuid4()
-        self.name = ""
-        self.type = ""
+class Order(Base):
+    __tablename__ = 'orders'
+
+    id_ = Column("id", String, primary_key=True, unique=True, index=True, nullable=False)
+    name = Column("name", String)
+    type = Column("type", String)
+    products = relationship('OrderProduct', back_populates='orders')
+    payments = relationship('Payment',secondary=payment_order, back_populates='orders')
+    table_id = Column("table_id", String, ForeignKey('tables.id'), nullable=False)
+    table = relationship('Table', back_populates='orders')
+    status = Column("status", Enum)
+    total = Column("total", Float)
+    
+    def __init__(self, type: str, products: dict[str, dict], table_id: str, status: Status = Status("open"), name: str = ""):
+        self.id_ = uuid.uuid4()
+        self.name = name
+        self.type = type
         self.products = products
-        self.status = Status("open")
-        self.payments = []
-        self.table = ""
-        self.total = Decimal(0)
+        self.status = status
+        self.payments = {}
+        self.table_id = table_id
+        self.total = float(Decimal(0))
 
     def to_dict(self) -> dict:
             return {
-                "id": self.order_id,
+                "id": self.id_,
                 "name": self.name,
                 "type": self.order_type,
-                "products": {product.id: product.to_dict() for product in self.products},
+                "products": self.products,
                 "status": self.status,
-                "payment": self.payment,
-                "table": self.table,
+                "payments": self.payments,
+                "table_id": self.table_id,
                 "total": self.total
             }
+            
+    def get_id(self) -> str:
+        return self.id_
             
     def get_type(self) -> str:
         return self.order_type
@@ -58,8 +74,8 @@ class Order:
     def get_payment(self) -> str:
         return self.payments
         
-    def set_payment(self, payment: str) -> None:
-        self.payments.append(Payment(payment))
+    def set_payment(self, payment_id: str) -> None:
+        self.payments = payment_id
     
     def get_total(self) -> Decimal:
         return self.total
@@ -69,14 +85,14 @@ class Order:
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, Order):   
-            return self.id == other.id
+            return self.id_ == other.id_
         return NotImplemented
 
     def __hash__(self) -> int:
-        return hash(self.order_id)
+        return hash(self.id_)
 
     def __repr__(self) -> str:
-        return f"Order(id={self.id}, products={self.products})"
+        return f"Order(id={self.id_}, products={self.products})"
 
     def __str__(self) -> str:
-        return f"Order {self.id}"
+        return f"Order {self.id_}"

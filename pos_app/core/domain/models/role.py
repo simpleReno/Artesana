@@ -1,26 +1,38 @@
 import uuid
-from pos_app.core.domain.models.employee import Employee
-from pos_app.core.domain.models.turn import Turn
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
+from pos_app.core.domain.models.base import Base, employee_role, role_turn
 
-class Role:
+
+class Role(Base):
+    
+    __tablename__ = 'roles'
+
+    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    name = Column(String, unique=True)
+    description = Column(String)
+    employees = relationship('Employee', secondary=employee_role, back_populates='roles')
+    turns = relationship('Turn', secondary=role_turn, back_populates='roles')
+    
     def __int__ (self, name: str, description: str):
-        self.id = uuid.uuid4()
+        self.id_ = uuid.uuid4()
         self.name = name
         self.description = description
         self.employees = {}
         self.turns = {}
 
+
     def to_dict(self) -> dict:
         return {
-            "id": self.id,
+            "id": self.id_,
             "name": self.name,
             "description": self.description,
-            "employees": {employee.id: employee.to_dict() for employee in self.employees},
-            "turns": {turn.id: turn.to_dict() for turn in self.turns}
+            "employees": self.employees,
+            "turns": self.turns
         }
         
     def get_id(self) -> int:
-        return self.id
+        return self.id_
     
     def get_name(self) -> str:
         return self.name
@@ -37,30 +49,20 @@ class Role:
     def get_employees(self) -> dict[str, str]:
         return self.employees
     
-    def add_employee(self, employee: Employee) -> None:
-        self.employees[employee.__hash__] = employee
+    def add_employee(self, employee_id: str, employee_name: str) -> None:
+        self.employees[employee_id] = employee_name
         
-    def remove_employee(self, employee: Employee) -> None:
-        if employee.id in self.employees:
-            del self.employees[employee.__hash__]
-            
-    def get_turns(self) -> dict[str, str]:
-        return self.turns
-    
-    def add_turn(self, turn: Turn) -> None:
-        self.turns[turn.__hash__] = turn
-        
-    def remove_turn(self, turn: Turn) -> None:
-        if turn.id in self.turns:
-            del self.turns[turn.__hash__]
+    def remove_employee(self, employee_id: str) -> None:
+        if employee_id in self.employees:
+            del self.employees[employee_id]
             
     def __eq__(self, other) -> bool:
         if not isinstance(other, Role):
             return False
-        return self.id == other.id
+        return self.id_ == other.id_
     
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash(self.id_)
     
     def __repr__(self) -> str:
         return f"Role(name={self.name}, description={self.description})"

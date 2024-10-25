@@ -2,8 +2,24 @@ import os
 import uuid
 import datetime
 from decimal import Decimal
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.orm import relationship
+from pos_app.core.domain.models.base import Base, employee_role, employee_turn, payment_employee
 
-class Employee():
+class Employee(Base):
+    __tablename__ = 'employees'
+
+    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, unique=True)
+    pin = Column(String, unique=True, nullable=False)
+    roles = relationship('Role', secondary=employee_role, back_populates='employees')
+    turns = relationship('Turn', secondary=employee_turn, back_populates='employees')
+    payments = relationship('Payment', secondary=payment_employee, back_populates='employees')
+    start_date = Column(DateTime)
+    stop_date = Column(DateTime)
+    
     def __init__(self, first_name: str, 
                  last_name: str, 
                  roles: dict[str, str],
@@ -12,7 +28,7 @@ class Employee():
                  stop_date: datetime.datetime = None, 
                  email: str="",
                  pin: str=""):
-        self.id = uuid.uuid4()
+        self.id_ = uuid.uuid4()
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -26,19 +42,22 @@ class Employee():
         
     def to_dict(self) -> dict:
         return {
-            "id": self.id,
+            "id": self.id_,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
             "pin": self.pin,
             "roles": self.roles,
             "turns": self.turns,
-            "payments": {payment.id: payment.to_dict() for payment in self.payments},
+            "payments": {payment.id: payment for payment in self.payments},
             "start_date": self.start_date,
             "stop_date": self.stop_date,
             "last_time_added": self.last_time_added
         }
-        
+    
+    def get_id(self) -> str:
+        return self.id_
+    
     def get_first_name(self) -> str:
         return self.first_name
     
@@ -84,7 +103,7 @@ class Employee():
             del self.turns[turn_id]
             
     def get_payments(self) -> dict[str, dict]:
-        return {payment.id: payment.to_dict() for payment in self.payments}
+        return {payment.id: payment for payment in self.payments}
     
     def add_payment(self, payment: dict) -> None:
         self.payments[payment.id] = payment
@@ -114,21 +133,13 @@ class Employee():
     def __eq__(self, other) -> bool:
         if not isinstance(other, Employee):
             return False
-        return self.id == other.id
+        return self.id_ == other.id_
     
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash(self.id_)
     
     def __repr__(self) -> str:
-        return f"Employee(id={self.id}, 
-                        first_name={self.first_name},
-                        last_name={self.last_name},
-                        roles={len(self.roles)},
-                        turns={len(self.turns)},
-                        payments={len(self.payments)},
-                        start_date={self.start_date},
-                        stop_date={self.stop_date},
-                        last_time_added={self.last_time_added})"
+        return f"Employee(id={self.id_}, first_name={self.first_name},last_name={self.last_name},roles={len(self.roles)},turns={len(self.turns)},payments={len(self.payments)},start_date={self.start_date},stop_date={self.stop_date},last_time_added={self.last_time_added})"
                         
     def __str__(self) -> str:
         return f"Employee {self.first_name} {self.last_name}"

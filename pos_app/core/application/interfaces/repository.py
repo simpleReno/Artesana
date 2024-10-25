@@ -15,7 +15,7 @@ from pos_app.core.domain.models.employee import Employee
 # responsible for the data access layer of the application. The repository interfaces define the methods that
 # the repository classes must implement to interact with the database. 
 ############################################################################################################
-class OrderRepository(ABC):
+class IOrderRepository(ABC):
     @abstractmethod
     def save(self, order: Order):
         pass
@@ -36,7 +36,7 @@ class OrderRepository(ABC):
     def delete(self, order_id: str):
         pass
 ############################################################################################################
-class ProductRepository(ABC):
+class IProductRepository(ABC):
     @abstractmethod
     def save(self, product: Product):
         pass
@@ -57,7 +57,7 @@ class ProductRepository(ABC):
     def delete(self, product_id: str):
         pass
 ############################################################################################################    
-class TableRepository(ABC):
+class ITableRepository(ABC):
     @abstractmethod
     def save(self, table: Table):
         pass
@@ -78,7 +78,7 @@ class TableRepository(ABC):
     def delete(self, table_id: str):
         pass
 ############################################################################################################
-class CategoryRepository(ABC):
+class ICategoryRepository(ABC):
     @abstractmethod
     def save(self, category: dict):
         pass
@@ -99,7 +99,7 @@ class CategoryRepository(ABC):
     def delete(self, category: dict):
         pass
 ############################################################################################################
-class EmployeeRepository(ABC):
+class IEmployeeRepository(ABC):
     @abstractmethod
     def save(self, employee: Employee):
         pass
@@ -120,7 +120,7 @@ class EmployeeRepository(ABC):
     def delete(self, employee_id: str):
         pass
 ############################################################################################################
-class RoleRepository(ABC):
+class IRoleRepository(ABC):
     @abstractmethod
     def save(self, role: dict):
         pass
@@ -141,7 +141,7 @@ class RoleRepository(ABC):
     def delete(self, role_id: str):
         pass
 ############################################################################################################
-class TurnRepository(ABC):
+class ITurnRepository(ABC):
     @abstractmethod
     def save(self, turn: Turn):
         pass
@@ -162,7 +162,7 @@ class TurnRepository(ABC):
     def delete(self, turn_id: str):
         pass
 ############################################################################################################
-class PaymentRepository(ABC):
+class IPaymentRepository(ABC):
     @abstractmethod
     def save(self, payment: Payment):
         pass

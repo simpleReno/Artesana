@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Status:
-    def __init__(self):
-        self.name = ""
+    def __init__(self, name: str):
+        self.name = name
         self.last_time_changed = None
         
     def to_dict(self) -> dict:
