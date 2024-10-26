@@ -29,6 +29,11 @@ MainWindow:
             color: "grey"
             pos: dp(12), dp(12)
             bold: True
+<ListedItem>
+    MDListItemLeadingIcon:
+        icon: root.icon
+    MDListItemSupportingText:
+        text: root.text
 ##############################################################################################
 # MainWindow
 ##############################################################################################
@@ -220,8 +225,8 @@ MainWindow:
 ##############################################################################################
 #(3) RecycleView - Product View
 ##############################################################################################
-        MDRecycleView:
-            id: rv
+        RecycleViewLeft:
+            id: rv_l
             key_viewclass: 'viewclass'
             size_hint: 0.6, 1
             MDRecycleGridLayout:
@@ -229,15 +234,19 @@ MainWindow:
                 spacing: dp(10)
                 padding: dp(10)
                 default_size: dp(120), dp(120)
-                size_hint_y: None
-                height: self.minimum_height
+                adaptive_size: True
         MDDivider:
             orientation: "vertical"
-        MDLabel:
+        RecycleViewRight:
+            id: rv_r
+            key_viewclass: 'viewclass'
             size_hint: 0.4, 1
-            text: "Welcome to Home Screen"
-            halign: "center"
-            theme_text_color: "Primary"
+            MDRecycleGridLayout:
+                cols: 1
+                spacing: dp(5)
+                padding: dp(10)
+                default_size: None, dp(48)
+                adaptive_size: True
 ##############################################################################################
 # Profile Screen - NavigationRail
 ##############################################################################################
