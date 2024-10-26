@@ -6,7 +6,6 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.clock import Clock
-from kivy.uix.scatter import Scatter
 from kivy.weakproxy import WeakProxy
 # Import Kivy Properties
 from kivy.properties import StringProperty
@@ -101,6 +100,7 @@ class MainApp(MDApp):
             self.root.on_window_resize()
     # On Start
     def on_start(self):
+        # Test Data
         self.root.ids.home.ids.rv_l.data.extend([
             {
                 "viewclass": "ProductCard",
