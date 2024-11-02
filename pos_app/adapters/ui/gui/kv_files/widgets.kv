@@ -1,0 +1,55 @@
+##############################################################################################
+# Widgets
+##############################################################################################
+<NavigationRailItem>
+    MDNavigationRailItemIcon:
+        icon: root.icon
+    MDNavigationRailItemLabel:
+        text: root.text
+<NavigationDrawerItem>
+    MDNavigationDrawerItemLeadingIcon:
+        icon: root.icon
+    MDNavigationDrawerItemText:
+        text: root.text
+<ProductCard>
+    padding: dp(10)
+    size_hint: None, None
+    size: dp(240), dp(240)
+    MDRelativeLayout:
+        MDIconButton:
+            icon: root.icon
+            pos_hint: {"top": 1, "right": 1}
+        MDLabel:
+            text: root.text
+            adaptive_size: True 
+            color: "grey"
+            pos: dp(12), dp(12)
+            bold: True
+<ListedItem>
+    size_hint_x: None
+    width: self.parent.width if self.parent else self.width
+    MDListItemLeadingIcon:
+        icon: root.icon
+    MDListItemSupportingText:
+        text: root.text
+<TabContentRecycleView>:
+    id: tab_content
+    key_viewclass: 'viewclass'
+    MDRecycleGridLayout:
+        cols: 3
+        spacing: dp(10)
+        padding: dp(10)
+        default_size: dp(120), dp(120)
+        default_size_hint: 1, None
+        adaptive_size: True
+<ItemListDisplay>
+    id: list
+    key_viewclass: 'viewclass'
+    RecycleBoxLayout:
+        orientation: 'vertical'
+        spacing: dp(5)
+        padding: dp(10)
+        default_size: None, dp(48)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height

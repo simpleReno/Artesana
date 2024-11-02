@@ -5,6 +5,7 @@ MainWindow:
 ##############################################################################################
 # Widgets
 ##############################################################################################
+<MDTitleBar>
 <NavigationRailItem>
     MDNavigationRailItemIcon:
         icon: root.icon
@@ -30,6 +31,8 @@ MainWindow:
             pos: dp(12), dp(12)
             bold: True
 <ListedItem>
+    size_hint_x: None
+    width: self.parent.width if self.parent else self.width
     MDListItemLeadingIcon:
         icon: root.icon
     MDListItemSupportingText:
@@ -38,7 +41,12 @@ MainWindow:
 # MainWindow
 ##############################################################################################
 <MainWindow>
+    id: main_window
     mg_bg_color: app.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTitleBar:
+            id: title_bar
 ##############################################################################################
 #(1) NavigationLayout - Main
 ##############################################################################################
@@ -242,6 +250,7 @@ MainWindow:
             key_viewclass: 'viewclass'
             size_hint: 0.4, 1
             MDRecycleGridLayout:
+                #orientation: 'vertical'
                 cols: 1
                 spacing: dp(5)
                 padding: dp(10)
