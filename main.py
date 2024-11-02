@@ -1,7 +1,7 @@
 # Import Python Libraries
 from dotenv import load_dotenv
 # Import Purge Cache Function
-from purge_pycache import delete_pycache
+from pos_app.purge_pycache import delete_pycache
 delete_pycache()  # Call this function at the start of your script
 # Import Kivy
 from kivy.core.window import Window 

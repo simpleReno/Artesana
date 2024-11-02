@@ -37,7 +37,7 @@ MDNavigationLayout:
                             icon: "account-circle-outline"
                             on_release: app.switch_theme_style() 
 ##############################################################################################
-# Screen Manager
+#(4) Screen Manager
 ##############################################################################################
                 MDScreenManager:
                     id: screen_manager
@@ -70,9 +70,12 @@ MDNavigationLayout:
         id: nav_drawer
         md_bg_color: app.theme_cls.backgroundColor
         radius: 0, dp(16), dp(16), 0
+##############################################################################################
         MDNavigationDrawerMenu:
             MDNavigationDrawerLabel:
                 text: "Menu"
+##############################################################################################
+            MDNavigationDrawerDivider:
 ##############################################################################################
             NavigationDrawerItem:
                 icon: "home"
