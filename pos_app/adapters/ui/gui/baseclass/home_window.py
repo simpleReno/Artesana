@@ -12,6 +12,8 @@ class HomeWindow(MDScreen):
         new_cols = max(1, int(self.ids.products.ids.related_content.children[0].width / dp(130)))
         grid_products.cols = new_cols
         print(grid_products.cols)
+    def switch_navigation_rail(self, screen_name):
+        self.ids.screen_manager.current = screen_name
         
 # Load Screen Classes
 class ScreenProducts(MDScreen):

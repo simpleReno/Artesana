@@ -22,19 +22,19 @@
                 text: "Product"
                 screen: "product"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationRailItem:
                 icon: "plus"
                 text: " Categories"
                 screen: "category"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationRailItem:
                 icon: "plus"
                 text: "Services"
                 screen: "service"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
 ##############################################################################################
 #(2) Screen Manager
 ##############################################################################################       

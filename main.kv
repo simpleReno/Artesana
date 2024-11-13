@@ -45,8 +45,8 @@ MDNavigationLayout:
                         id: home
                         name: "home"
                     ClockWindow:
-                        id: clock
-                        name: "clock"
+                        id: clock_in_out
+                        name: "clock_in_out"
                     InventoryWindow:
                         id: inventory
                         name: "inventory"
@@ -79,9 +79,15 @@ MDNavigationLayout:
             NavigationDrawerItem:
                 icon: "home"
                 text: "Home"
+                screen: "home"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationDrawerItem:
                 icon: "clock"
                 text: "Clock In/Out"
+                screen: "clock_in_out"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
 ##############################################################################################
             MDNavigationDrawerDivider:
 ##############################################################################################
@@ -94,18 +100,30 @@ MDNavigationLayout:
             NavigationDrawerItem:
                 icon: "bookshelf"
                 text: "Reports"
+                screen: "reports"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationDrawerItem:
                 icon: "calendar-account"
                 text: "Payroll"
+                screen: "payroll"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
 ##############################################################################################
             MDNavigationDrawerDivider:
 ##############################################################################################
             NavigationDrawerItem:
                 icon: "account-key"
                 text: "Manage"
+                screen: "manage"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationDrawerItem:
                 icon: "tools"
                 text: "Settings"
+                screen: "settings"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
 ##############################################################################################
             MDNavigationDrawerDivider: 
 ##############################################################################################

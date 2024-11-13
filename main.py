@@ -64,9 +64,6 @@ class MainApp(MDApp):
     # Switch Screen Function
     def switch_screen(self, screen_name):
         self.root.ids.screen_manager.current = screen_name
-    # Switch Navigation Rail Function
-    def switch_navigation_rail(self, screen_name):
-        self.root.ids.home.ids.screen_manager_home.current = screen_name
     # On Window Size
     # def on_window_resize(self, *args):
     #     if self.root:

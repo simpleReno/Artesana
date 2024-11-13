@@ -6,6 +6,8 @@ class InventoryWindow(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.title = 'Inventory'
+    def switch_navigation_rail(self, screen_name):
+        self.ids.screen_manager.current = screen_name
 # Load Screen Classes
 class ScreenProduct(MDScreen):
     pass

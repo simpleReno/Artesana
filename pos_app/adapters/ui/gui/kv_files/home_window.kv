@@ -22,25 +22,25 @@
                 text: "Products"
                 screen: "products"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationRailItem:
                 icon: "table-chair"
                 text: "Tables"
                 screen: "tables"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
             NavigationRailItem:
                 icon: "cart"
                 text: "Orders"
                 screen: "orders"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationRailItem:
                 icon: "history"
                 text: "Charge"
                 screen: "charge"
                 on_touch_down: 
-                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
 ##############################################################################################
 #(2) Third Box Layout - Content
 ##############################################################################################
@@ -87,7 +87,7 @@
 #(3) Inner Screen Manager
 ##############################################################################################
             MDScreenManager:
-                id: screen_manager_home
+                id: screen_manager
                 ScreenProducts:
                     id: products
                     name: "products"
