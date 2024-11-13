@@ -29,7 +29,7 @@ from kivymd.uix.navigationdrawer import MDNavigationDrawerItem
 from kivymd.uix.card import MDCard
 from kivymd.uix.recycleview import RecycleView
 # Import baseclass
-from pos_app.adapters.ui.gui.baseclass.widgets import ProductCard, TabContentRecycleView
+from pos_app.adapters.ui.gui.baseclass.widgets import ProductCard, TabContent
 from pos_app.adapters.ui.gui.baseclass.home_window import HomeWindow
 from pos_app.adapters.ui.gui.baseclass.clock_window import ClockWindow
 from pos_app.adapters.ui.gui.baseclass.reports_window import ReportsWindow
@@ -45,7 +45,7 @@ class MainApp(MDApp):
         self.title = "Artesana" 
     # Build App
     def build(self):
-        Window.bind(on_resize=self.on_window_resize)
+        # Window.bind(on_resize=self.on_window_resize)
         self.theme_cls.theme_styled_switch_animation = True
         self.theme_cls.theme_styled_switch_animation_duration = 0.2
         self.theme_cls.theme_style = "Light"
@@ -68,9 +68,11 @@ class MainApp(MDApp):
     def switch_navigation_rail(self, screen_name):
         self.root.ids.home.ids.screen_manager_home.current = screen_name
     # On Window Size
-    def on_window_resize(self, *args):
-        if self.root:
-            self.root.ids.home.on_window_resize()
+    # def on_window_resize(self, *args):
+    #     if self.root:
+    #         self.root.ids.home.on_window_resize()
+    def switch_navigation_drawer(self, screen_name):
+        self.root.ids.screen_manager.current = screen_name
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         if instance_tab:
             instance_tab.ids.tab_content.refresh_from_data()
@@ -79,6 +81,8 @@ class MainApp(MDApp):
         # Getting widgets using ids
         tabs_home = self.root.ids.home.ids.products.ids.tabs
         tabs_tables = self.root.ids.home.ids.tables.ids.tabs
+        home_content = self.root.ids.home.ids.products.ids.related_content
+        tables_content = self.root.ids.home.ids.tables.ids.related_content
         list = self.root.ids.home.ids.products.ids.list
         # Add content to the tabs
         for category in ["Category 1", "Category 2", "Category 3", "Category 4"]:
@@ -86,7 +90,8 @@ class MainApp(MDApp):
                 MDTabsItemIcon(icon="beer"),
                 MDTabsItemText(text=category),
             )
-            tab_content = TabContentRecycleView()
+            tabs_home.add_widget(tab)
+            tab_content = TabContent()
             tab_content.data.extend(
                 [
                     {
@@ -127,32 +132,31 @@ class MainApp(MDApp):
                     },
                 ]
             )
-            tab.add_widget(tab_content)
-            tabs_home.add_widget(tab)
+            home_content.add_widget(tab_content)
         # Test Data
         list.data.extend(
             [
                 {
                     "viewclass": "ProductCard",
-                    "icon": "android",
+                    "icon": "beer",
                     "text": "Product 1",
                     "callback": lambda x: x,
                 },
                 {
                     "viewclass": "ProductCard",
-                    "icon": "android",
+                    "icon": "beer",
                     "text": "Product 2",
                     "callback": lambda x: x,
                 },
                 {
                     "viewclass": "ProductCard",
-                    "icon": "android",
+                    "icon": "beer",
                     "text": "Product 3",
                     "callback": lambda x: x,
                 },
                 {
                     "viewclass": "ProductCard",
-                    "icon": "android",
+                    "icon": "beer",
                     "text": "Product 4",
                     "callback": lambda x: x,
                 },
@@ -163,50 +167,49 @@ class MainApp(MDApp):
                 MDTabsItemIcon(icon="table-chair"),
                 MDTabsItemText(text=category),
             )
-            tab_content = TabContentRecycleView()
+            tabs_tables.add_widget(tab)
+            tab_content = TabContent()
             tab_content.data.extend(
                 [
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 1",
                         "callback": lambda x: x,
                     },
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 2",
                         "callback": lambda x: x,
                     },
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 3",
                         "callback": lambda x: x,
                     },
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 4",
                         "callback": lambda x: x,
                     },
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 5",
                         "callback": lambda x: x,
                     },
                     {
                         "viewclass": "ProductCard",
-                        "icon": "android",
+                        "icon": "table-chair",
                         "text": "Product 6",
                         "callback": lambda x: x,
                     },
                 ]
             )
-            tab.add_widget(tab_content)
-            tabs_tables.add_widget(tab)
-            
+            tables_content.add_widget(tab_content)
 #  Run App   
 if __name__ == "__main__":
     MainApp().run()

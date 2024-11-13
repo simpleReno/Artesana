@@ -1,0 +1,146 @@
+#: include pos_app/adapters/ui/gui/kv_files/widgets.kv
+##############################################################################################
+# Inventor Window
+##############################################################################################
+<InventoryWindow>
+    id: inventory
+    mg_bg_color: app.theme_cls.backgroundColor
+##############################################################################################
+#(1) Box Layout - NavigationRail
+##############################################################################################
+    MDBoxLayout:
+        orientation: 'horizontal'
+##############################################################################################
+#(2) Navigation Rail
+##############################################################################################
+        MDNavigationRail:
+            id: nav_rail
+            type: "labeled"
+            mb_bg_color: app.theme_cls.backgroundColor
+            NavigationRailItem:
+                icon: "plus"
+                text: "Product"
+                screen: "product"
+                on_touch_down: 
+                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "plus"
+                text: " Categories"
+                screen: "category"
+                on_touch_down: 
+                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "plus"
+                text: "Services"
+                screen: "service"
+                on_touch_down: 
+                    app.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+##############################################################################################
+#(2) Screen Manager
+##############################################################################################       
+        MDScreenManager:
+            id: screen_manager
+            ScreenProduct:
+                id: product
+                name: "product"
+            ScreenCategory:
+                id: category
+                name: "category"
+            ScreenService:
+                id: service
+                name: "service"
+##############################################################################################
+# Screens - Inventory
+##############################################################################################
+##############################################################################################
+# Screen Product
+##############################################################################################
+<ScreenProduct>
+    mg_bg_color: app.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+        md_bg_color: app.theme_cls.backgroundColor
+        MDTextField:
+            id: product_name
+            hint_text: "Product Name"
+            mode: "outlined"
+        MDTextField:
+            id: product_price
+            hint_text: "Product Price"
+            mode: "outlined"
+        MDTextField:
+            id: product_description
+            hint_text: "Product Description"
+            mode: "outlined"
+        MDTextField:
+            id: product_category
+            hint_text: "Product Category"
+            mode: "outlined"
+        MDTextField:
+            id: product_service
+            hint_text: "Product Service"
+            mode: "outlined"
+        MDBoxLayout:
+            orientation: 'horizontal'
+            MDButton:
+                style: "elevated"
+                text: "Save"
+                on_press: app.save_product()
+            MDButton:
+                style: "elevated"
+                text: "Cancel"
+                on_press: app.cancel_product()
+##############################################################################################
+# Screen Category
+##############################################################################################
+<ScreenCategory>
+    mg_bg_color: app.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+        md_bg_color: app.theme_cls.backgroundColor
+        MDTextField:
+            id: category_name
+            hint_text: "Category Name"
+            mode: "outlined"
+        MDBoxLayout:
+            orientation: 'horizontal'
+            MDButton:
+                style: "elevated"
+                text: "Save"
+                on_press: app.save_category()
+            MDButton:
+                style: "elevated"
+                text: "Cancel"
+                on_press: app.cancel_category()
+##############################################################################################
+# Screen Service
+##############################################################################################
+<ScreenService>
+    mg_bg_color: app.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+        md_bg_color: app.theme_cls.backgroundColor
+        MDTextField:
+            id: service_name
+            hint_text: "Service Name"
+            mode: "outlined"
+        MDTextField:
+            id: service_price
+            hint_text: "Service Price"
+            mode: "outlined"
+        MDBoxLayout:
+            orientation: 'horizontal'
+            MDButton:
+                style: "elevated"
+                text: "Save"
+                on_press: app.save_service()
+            MDButton:
+                style: "elevated"
+                text: "Cancel"
+                on_press: app.cancel_service()

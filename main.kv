@@ -41,7 +41,6 @@ MDNavigationLayout:
 ##############################################################################################
                 MDScreenManager:
                     id: screen_manager
-                    size_hint: 1, 1
                     HomeWindow:
                         id: home
                         name: "home"
@@ -89,6 +88,9 @@ MDNavigationLayout:
             NavigationDrawerItem:
                 icon: "store"
                 text: "Inventory"
+                screen: "inventory"
+                on_touch_down: 
+                    app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationDrawerItem:
                 icon: "bookshelf"
                 text: "Reports"

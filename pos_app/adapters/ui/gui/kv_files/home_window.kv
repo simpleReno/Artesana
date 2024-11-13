@@ -1,6 +1,6 @@
 #: include pos_app/adapters/ui/gui/kv_files/widgets.kv
 ##############################################################################################
-# HomeWindow
+# Home Window
 ##############################################################################################
 <HomeWindow>
     id: home
@@ -11,7 +11,7 @@
     MDBoxLayout:
         orientation: 'horizontal'
 ##############################################################################################
-#(2) NavigationRail
+#(2) Navigation Rail
 ##############################################################################################
         MDNavigationRail:
             id: nav_rail
@@ -107,16 +107,20 @@
     MDBoxLayout:
         orientation: 'horizontal'
 ##############################################################################################
-#(2) RecycleView - Product View
+#(2) Recycle View - Product View
 #############################################################################################
         MDTabsPrimary:
             id: tabs
             pos_hint: {"top": 1}
             allow_scroll: False
             size_hint_x: 0.6
-            TabContentRecycleView:
-                viewclass: 'ProductCard'
-                id: tab_content
+            MDDivider:
+                orientation: "horizontal"
+            MDTabsCarousel:
+                id: related_content
+                size_hint_y: None
+                height: root.height - dp(100)
+                width: root.width
         MDDivider:
             orientation: "vertical"
         ItemListDisplay:
@@ -133,9 +137,13 @@
             size_hint_x: 0.6
             pos_hint: {"top": 1}
             allow_scroll: False
-            TabContentRecycleView:
-                viewclass: 'ProductCard'
-                id: tab_content
+            MDDivider:
+                orientation: "horizontal"
+            MDTabsCarousel:
+                id: related_content
+                size_hint_y: None
+                height: root.height - dp(100)
+                width: root.width
         MDDivider:
             orientation: "vertical"
         ItemListDisplay:

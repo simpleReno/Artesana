@@ -8,9 +8,10 @@ class HomeWindow(MDScreen):
         super().__init__(**kwargs)
     # Reassign Grid Layout Columns
     def on_window_resize(self, *args):
-        grid_left = self.ids.products.ids.tab_content.children[0]
-        new_cols = max(1, int(self.ids.products.width / dp(220)))
-        grid_left.cols = new_cols
+        grid_products = self.ids.products.ids.related_content.children[0].children[0].children[0]
+        new_cols = max(1, int(self.ids.products.ids.related_content.children[0].width / dp(130)))
+        grid_products.cols = new_cols
+        print(grid_products.cols)
         
 # Load Screen Classes
 class ScreenProducts(MDScreen):

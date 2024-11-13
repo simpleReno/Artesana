@@ -9,7 +9,6 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.list import MDListItem
 from kivymd.uix.navigationdrawer import MDNavigationDrawerItem
 from kivymd.uix.navigationrail import MDNavigationRailItem
-
 # Load Navigation Rail Items
 class NavigationRailItem(MDNavigationRailItem):
     icon = StringProperty()
@@ -34,7 +33,7 @@ class ListedItem(MDListItem):
         if self.parent:
             self.width = self.parent.width
 # Load Tab Content Recycle View
-class TabContentRecycleView(RecycleView):
+class TabContent(RecycleView):
     pass
 # Load Item List Display
 class ItemListDisplay(RecycleView):
