@@ -70,9 +70,17 @@ class MainApp(MDApp):
     #         self.root.ids.home.on_window_resize()
     def switch_navigation_drawer(self, screen_name):
         self.root.ids.screen_manager.current = screen_name
+        
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         if instance_tab:
             instance_tab.ids.tab_content.refresh_from_data()
+    # def add_tab(self):
+    #     tabs_home = self.root.ids.home.ids.products.ids.tabs
+    #     tab = MDTabsItem(
+    #         MDTabsItemIcon(icon="beer"),
+    #         MDTabsItemText(text="Category 5"),
+    #     )
+    #     tabs_home.add_widget(tab)
     # On Start
     def on_start(self):
         # Getting widgets using ids

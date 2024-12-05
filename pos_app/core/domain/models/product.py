@@ -15,7 +15,6 @@ class Product(Base):
     amount = Column("amount", Integer)
     price = Column("price", Float)
     description = Column("description", String)
-    amount = Column("amount", Integer)
     last_time_added = Column("last_time_added", DateTime, default=datetime.datetime.now())
     category_id = Column("category_id", String, ForeignKey('categories.id'), nullable=False)
     

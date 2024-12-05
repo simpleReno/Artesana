@@ -56,91 +56,258 @@
 # Screen Product
 ##############################################################################################
 <ScreenProduct>
-    mg_bg_color: app.theme_cls.backgroundColor
     MDBoxLayout:
-        orientation: 'vertical'
-        padding: dp(10)
-        spacing: dp(10)
+        orientation: 'horizontal'
         md_bg_color: app.theme_cls.backgroundColor
-        MDTextField:
-            id: product_name
-            hint_text: "Product Name"
-            mode: "outlined"
-        MDTextField:
-            id: product_price
-            hint_text: "Product Price"
-            mode: "outlined"
-        MDTextField:
-            id: product_description
-            hint_text: "Product Description"
-            mode: "outlined"
-        MDTextField:
-            id: product_category
-            hint_text: "Product Category"
-            mode: "outlined"
-        MDTextField:
-            id: product_service
-            hint_text: "Product Service"
-            mode: "outlined"
-        MDBoxLayout:
-            orientation: 'horizontal'
-            MDButton:
-                style: "elevated"
-                text: "Save"
-                on_press: app.save_product()
-            MDButton:
-                style: "elevated"
-                text: "Cancel"
-                on_press: app.cancel_product()
+        MDAnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+            padding: dp(10)
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True
+                #pos_hint: {"right": 0.1, "top": 0.1}
+                #pos_hint: {"x": 0.05, "y": 0.3}
+                padding_y: dp(30)
+                spacing: dp(20)
+                size_hint: 0.95, None
+                md_bg_color: app.theme_cls.backgroundColor
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Name"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Amount"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Price"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "filled"
+                    multiline: True
+                    max_height: dp(100)
+                    MDTextFieldHintText:
+                        text: "Description"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    id: drop_text
+                    size_hint: 0.6, None
+                    mode: "outlined"
+                    on_focus: root.open_menu()
+                    MDTextFieldHintText:
+                        text: "Category"
+                    MDTextFieldTrailingIcon:
+                        icon: "arrow-down"
+                MDBoxLayout:
+                    radius: [25, 25, 25, 25]
+                    md_bg_color: app.theme_cls.backgroundColor
+                    orientation: 'horizontal'
+                    adaptive_height: True
+                    spacing: dp(10)
+                    MDButton:
+                        style: "filled"
+                        MDButtonText:
+                            text: "Save"
+                            #on_press: app.save_product()
+                    MDButton:
+                        style: "filled"
+                        MDButtonText:
+                            text: "Cancel"
+                            #on_press: app.cancel_product()
+        MDDivider:
+            height: dp(200)
+            orientation: 'vertical'
+        MDBoxLayout: 
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            md_bg_color: app.theme_cls.backgroundColor
+            MDTextField:
+                id: search
+                hint_text: "Search"
+                mode: "outlined"
+            DataTable:
+                id: data_table
+                check: True
+                rows_num: 10
+            MDBoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Edit"
+                    #on_press: app.edit_product()
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Delete"
+                    #on_press: app.delete_product()
 ##############################################################################################
 # Screen Category
 ##############################################################################################
 <ScreenCategory>
-    mg_bg_color: app.theme_cls.backgroundColor
     MDBoxLayout:
-        orientation: 'vertical'
-        padding: dp(10)
-        spacing: dp(10)
+        orientation: 'horizontal'
         md_bg_color: app.theme_cls.backgroundColor
-        MDTextField:
-            id: category_name
-            hint_text: "Category Name"
-            mode: "outlined"
         MDBoxLayout:
-            orientation: 'horizontal'
-            MDButton:
-                style: "elevated"
-                text: "Save"
-                on_press: app.save_category()
-            MDButton:
-                style: "elevated"
-                text: "Cancel"
-                on_press: app.cancel_category()
+            orientation: 'vertical'
+            padding: dp(10)
+            MDBoxLayout:
+                orientation: 'vertical'
+                height: self.minimum_height
+                padding_y: dp(10)
+                spacing: dp(10)
+                size_hint: 0.95, None
+                md_bg_color: app.theme_cls.backgroundColor
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Add Category"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDButton:
+                    style: "filled"
+                    on_release: root.add_subcategory()
+                    MDButtonText:
+                        text: "Add Subcategory"
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: dp(10)
+                spacing: dp(10)
+                md_bg_color: app.theme_cls.backgroundColor
+                ItemListDisplay:
+                    id: list
+        MDDivider:
+            height: dp(200)
+            orientation: 'vertical'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            md_bg_color: app.theme_cls.backgroundColor
+            MDBoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                adaptive_size: True
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Edit"
+                    #on_press: app.edit_category()
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Delete"
+                    #on_press: app.delete_category()
+               
 ##############################################################################################
 # Screen Service
 ##############################################################################################
 <ScreenService>
-    mg_bg_color: app.theme_cls.backgroundColor
     MDBoxLayout:
-        orientation: 'vertical'
-        padding: dp(10)
-        spacing: dp(10)
+        orientation: 'horizontal'
         md_bg_color: app.theme_cls.backgroundColor
-        MDTextField:
-            id: service_name
-            hint_text: "Service Name"
-            mode: "outlined"
-        MDTextField:
-            id: service_price
-            hint_text: "Service Price"
-            mode: "outlined"
-        MDBoxLayout:
-            orientation: 'horizontal'
-            MDButton:
-                style: "elevated"
-                text: "Save"
-                on_press: app.save_service()
-            MDButton:
-                style: "elevated"
-                text: "Cancel"
-                on_press: app.cancel_service()
+        MDAnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+            padding: dp(10)
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True
+                #pos_hint: {"right": 0.1, "top": 0.1}
+                #pos_hint: {"x": 0.05, "y": 0.3}
+                padding_y: dp(30)
+                spacing: dp(20)
+                size_hint: 0.95, None
+                md_bg_color: app.theme_cls.backgroundColor
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Name"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Amount"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Price"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "filled"
+                    multiline: True
+                    max_height: dp(100)
+                    MDTextFieldHintText:
+                        text: "Description"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    id: drop_text
+                    size_hint: 0.6, None
+                    mode: "outlined"
+                    on_focus: root.open_menu()
+                    MDTextFieldHintText:
+                        text: "Category"
+                    MDTextFieldTrailingIcon:
+                        icon: "arrow-down"
+                MDBoxLayout:
+                    radius: [25, 25, 25, 25]
+                    md_bg_color: app.theme_cls.backgroundColor
+                    orientation: 'horizontal'
+                    adaptive_height: True
+                    spacing: dp(10)
+                    MDButton:
+                        style: "filled"
+                        MDButtonText:
+                            text: "Save"
+                            #on_press: app.save_product()
+                    MDButton:
+                        style: "filled"
+                        MDButtonText:
+                            text: "Cancel"
+                            #on_press: app.cancel_product()
+                
+        MDDivider:
+            height: dp(200)
+            orientation: 'vertical'
+        MDBoxLayout: 
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            md_bg_color: app.theme_cls.backgroundColor
+            MDTextField:
+                id: search
+                hint_text: "Search"
+                mode: "outlined"
+            DataTable:
+                id: data_table
+                check: True
+                rows_num: 10
+            MDBoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Edit"
+                    #on_press: app.edit_product()
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Delete"
+                    #on_press: app.delete_product()
