@@ -35,6 +35,7 @@ class ScreenProduct(MDScreen):
     def set_item(self, text_item):
         self.ids.drop_text.text = text_item
         self.menu.dismiss()
+        
 class ScreenCategory(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

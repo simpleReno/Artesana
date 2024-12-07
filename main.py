@@ -42,7 +42,7 @@ class MainApp(MDApp):
     # init App
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.title = "Artesana" 
+        self.title = "Artesana"
     # Build App
     def build(self):
         # Window.bind(on_resize=self.on_window_resize)

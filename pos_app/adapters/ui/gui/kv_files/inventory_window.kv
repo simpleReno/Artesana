@@ -167,7 +167,7 @@
                 height: self.minimum_height
                 padding_y: dp(10)
                 spacing: dp(10)
-                size_hint: 0.95, None
+                size_hint: 1, None
                 md_bg_color: app.theme_cls.backgroundColor
                 MDTextField:
                     mode: "outlined"
@@ -175,18 +175,47 @@
                         text: "Add Category"
                     MDTextFieldTrailingIcon:
                         icon: "information"
-                MDButton:
-                    style: "filled"
-                    on_release: root.add_subcategory()
-                    MDButtonText:
-                        text: "Add Subcategory"
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    adaptive_height: True
+                    MDButton:
+                        style: "filled"
+                        on_release: root.add_subcategory()
+                        MDButtonText:
+                            text: "Add Subcategory"
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        adaptive_height: True
+                        CheckItem:
+                            active: True
+                            text: "Product"
+                            group: "category"
+                        CheckItem:
+                            active: False
+                            text: "Service"
+                            group: "category"  
             MDBoxLayout:
                 orientation: 'vertical'
                 padding: dp(10)
                 spacing: dp(10)
+                
                 md_bg_color: app.theme_cls.backgroundColor
                 ItemListDisplay:
                     id: list
+            MDBoxLayout:
+                orientation: 'horizontal'
+                spacing: dp(10)
+                adaptive_height: True
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Save"
+                    #on_press: app.edit_category()
+                MDButton:
+                    style: "elevated"
+                    MDButtonText:
+                        text: "Cancel"
+                    #on_press: app.delete_category()
         MDDivider:
             height: dp(200)
             orientation: 'vertical'
@@ -195,6 +224,14 @@
             padding: dp(10)
             spacing: dp(10)
             md_bg_color: app.theme_cls.backgroundColor
+            MDTextField:
+                id: search
+                hint_text: "Search"
+                mode: "outlined"
+            DataTable:
+                id: data_table
+                check: True
+                rows_num: 10
             MDBoxLayout:
                 orientation: 'horizontal'
                 spacing: dp(10)
@@ -239,13 +276,19 @@
                 MDTextField:
                     mode: "outlined"
                     MDTextFieldHintText:
-                        text: "Amount"
+                        text: "Price"
                     MDTextFieldTrailingIcon:
                         icon: "information"
                 MDTextField:
                     mode: "outlined"
                     MDTextFieldHintText:
-                        text: "Price"
+                        text: "Duration"
+                    MDTextFieldTrailingIcon:
+                        icon: "information"
+                MDTextField:
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "Sessions"
                     MDTextFieldTrailingIcon:
                         icon: "information"
                 MDTextField:

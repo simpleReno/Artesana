@@ -1,0 +1,192 @@
+##############################################################################################
+# Reports Window
+##############################################################################################
+<ReportsWindow>
+    id: reports
+    mg_bg_color: app.theme_cls.backgroundColor
+##############################################################################################
+#(1) Box Layout - NavigationRail
+##############################################################################################        
+    MDBoxLayout:
+        orientation: 'horizontal'
+##############################################################################################
+#(2) Navigation Rail
+##############################################################################################
+        MDNavigationRail:
+            id: nav_rail
+            type: "labeled"
+            md_bg_color: app.theme_cls.backgroundColor
+            NavigationRailItem:
+                icon: "clipboard-outline"
+                text: "Total"
+                screen: "total"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "cube-outline"
+                text: "Products"
+                screen: "products"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "handshake-outline"
+                text: "Services"
+                screen: "services"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
+##############################################################################################
+#(2) Screen Manager
+##############################################################################################       
+        MDScreenManager:
+            id: screen_manager
+            ScreenReports_Total:
+                id: total
+                name: "total"
+            ScreenReports_Products:
+                id: products
+                name: "products"
+            ScreenReports_Services:
+                id: services
+                name: "services"
+##############################################################################################
+# Screens - Reports
+##############################################################################################
+##############################################################################################
+# Screen Reports - Total
+##############################################################################################
+<ScreenReports_Total>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        md_bg_color: app.theme_cls.backgroundColor
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint: 0.6, 1
+            md_bg_color: app.theme_cls.backgroundColor
+            MDLabel:
+                text: "Total Sales"
+                font_size: 24
+            MDLabel:
+                text: "Total Revenue"
+                font_size: 24
+            MDLabel:
+                text: "Total Expenses"
+                font_size: 24
+            MDLabel:
+                text: "Total Profit"
+                font_size: 24
+            MDLabel:
+                text: "Total Customers"
+                font_size: 24
+            MDLabel:
+                text: "Total Orders"
+                font_size: 24
+            MDLabel:
+                text: "Total Products"
+                font_size: 24
+            MDLabel:
+                text: "Total Services"
+                font_size: 24
+            MDLabel:
+                text: "Total Employees"
+                font_size: 24
+            MDLabel:
+                text: "Total Vendors"
+                font_size: 24
+            MDLabel:
+                text: "Total Transactions"
+                font_size: 24
+            MDLabel:
+                text: "Total Payments"
+                font_size: 24
+            MDLabel:
+                text: "Total Refunds"
+                font_size: 24
+            MDLabel:
+                text: "Total Discounts"
+                font_size: 24
+##############################################################################################
+# Screen Reports - Products
+##############################################################################################
+<ScreenReports_Products>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        md_bg_color: app.theme_cls.backgroundColor
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint: 0.6, 1
+            md_bg_color: app.theme_cls.backgroundColor
+            MDLabel:
+                text: "Total Products"
+                font_size: 24
+            MDLabel:
+                text: "Total Sales"
+                font_size: 24
+            MDLabel:
+                text: "Total Revenue"
+                font_size: 24
+            MDLabel:
+                text: "Total Expenses"
+                font_size: 24
+            MDLabel:
+                text: "Total Profit"
+                font_size: 24
+            MDLabel:
+                text: "Total Customers"
+                font_size: 24
+            MDLabel:
+                text: "Total Orders"
+                font_size: 24
+            MDLabel:
+                text: "Total Services"
+                font_size: 24
+            MDLabel:
+                text: "Total Vendors"
+                font_size: 24
+            MDLabel:
+                text: "Total Transactions"
+                font_size: 24
+            MDLabel:
+                text: "Total Payments"
+                font_size: 24
+            MDLabel:
+                text: "Total Refunds"
+                font_size: 24
+            MDLabel:
+                text: "Total Discounts"
+                font_size: 24
+##############################################################################################
+# Screen Reports - Services
+##############################################################################################
+<ScreenReports_Services>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        md_bg_color: app.theme_cls.backgroundColor
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint: 0.6, 1
+            md_bg_color: app.theme_cls.backgroundColor
+            MDLabel:
+                text: "Total Services"
+                font_size: 24
+            MDLabel:
+                text: "Total Sales"
+                font_size: 24
+            MDLabel:
+                text: "Total Revenue"
+                font_size: 24
+            MDLabel:
+                text: "Total Expenses"
+                font_size: 24
+            MDLabel:
+                text: "Total Profit"
+                font_size: 24
+            MDLabel:    
+                text: "Total Customers"
+                font_size: 24
+           

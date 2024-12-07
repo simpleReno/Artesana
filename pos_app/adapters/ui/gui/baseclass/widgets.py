@@ -1,10 +1,12 @@
 # Import Kivy Modules
+import asynckivy
 from kivy.metrics import dp
 from kivy.app import App
 # Import Kivy Properties
 from kivy.properties import StringProperty, NumericProperty, ListProperty, BooleanProperty
 #Import Kivy Components
 from kivy.uix.recycleview import RecycleView
+from kivy.uix.behaviors import ButtonBehavior
 # Import KivyMD Modules
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import (
@@ -15,6 +17,9 @@ from kivymd.uix.textfield import (
     MDTextFieldTrailingIcon,
     MDTextFieldMaxLengthText,
 )
+from kivymd.uix.behaviors import RotateBehavior
+from kivymd.uix.expansionpanel import MDExpansionPanel
+from kivymd.uix.list import MDListItemTrailingIcon
 from kivymd.uix.button import MDButton
 from kivymd.uix.card import MDCard
 from kivymd.uix.list import MDListItem
@@ -64,7 +69,9 @@ class SubCategoryItem(MDBoxLayout):
         
     def create_text_field(self):
         text_field = MDTextField(
-            text= "Subcategory",
+            MDTextFieldHintText(
+                text="Subcategory"
+            ),
             mode="filled",
         )
         return text_field
@@ -145,3 +152,17 @@ class HBButton(MDButton):
 # Load Data Table
 class DataTable(MDBoxLayout):
     pass
+
+class CheckItem(MDBoxLayout):
+    text = StringProperty()
+    group = StringProperty()
+    active = BooleanProperty()
+class ExpansionPanelItem(MDExpansionPanel):
+    pass
+class TrailingPressedIconButton(
+    MDListItemTrailingIcon, ButtonBehavior, RotateBehavior):
+    pass
+class ExpansionInternalItem(MDListItem):
+    text = StringProperty()
+    icon = StringProperty()
+    supporting_text = StringProperty()
