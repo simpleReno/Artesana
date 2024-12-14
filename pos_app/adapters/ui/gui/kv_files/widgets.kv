@@ -84,43 +84,72 @@
         adaptive_size: True
         #pos_hint: {"center_y": .5}
 
-<ExpansionPanelItem>
+<DecimalKeyboard>
+    orientation: 'vertical'
+    padding: dp(10)
+    spacing: dp(10)
+    MDTextField:
+        id: text_field
+        adaptive_size: True
+        hint_text: "Enter Amount"
+        mode: "outlined"
+        size_hint: 1, None
+        readonly: True
+    MDGridLayout:
+        id: keyboard_layout
+        cols: 3
+        spacing: dp(5)
+        padding: dp(10)
+        Button:
+            text: "1"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
 
-    MDExpansionPanelHeader:
+        Button:
+            text: "2"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
 
-        MDListItem:
-            theme_bg_color: "Custom"
-            md_bg_color: self.theme_cls.surfaceContainerLowColor
-            ripple_effect: False
+        Button:
+            text: "3"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+        Button:
+            text: "4"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+            
+        Button:
+            text: "5"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+            
+        Button:
+            text: "6"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+            
+        Button:
+            text: "7"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+            
+        Button:
+            text: "8"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
+            
+        Button:
+            text: "9"
+            size_hint: 1, 1
+            on_press: root.on_click(self)
 
-            MDListItemSupportingText:
-                text: root.text
-
-            TrailingPressedIconButton:
-                id: chevron
-                icon: "chevron-right"
-                #on_release: self.tap_expansion_chevron(root, chevron)
-
-    MDExpansionPanelContent:
-        orientation: "vertical"
-        padding: "12dp", 0, "12dp", "12dp"
-        md_bg_color: self.theme_cls.surfaceContainerLowestColor
-
-        MDLabel:
-            text: "Orders"
-            adaptive_height: True
-            padding_x: "16dp"
-            padding_y: "12dp"
-
-<ExpansionInternalItem@MDListItem>:
-    theme_bg_color: "Custom"
-    md_bg_color: self.theme_cls.surfaceContainerLowestColor
-
-    MDListItemLeadingIcon:
-        icon: root.icon
-
-    MDListItemHeadlineText:
-        text: root.text
-
-    MDListItemSupportingText:
-        text: root.supporting_text
+        Button:
+            text: "Delete"
+            size_hint: 1, 1
+            on_press: root.on_backspace()
+            
+        Button:
+            text: "0"
+            size_hint: 1, 1
+            on_press: root.on_click(self)

@@ -23,17 +23,11 @@
                 on_touch_down: 
                     root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
             NavigationRailItem:
-                icon: "table-chair"
-                text: "Tables"
-                screen: "tables"
-                on_touch_down: 
-                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
-            NavigationRailItem:
                 icon: "cart"
                 text: "Orders"
                 screen: "orders"
                 on_touch_down: 
-                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
             NavigationRailItem:
                 icon: "history"
                 text: "Charge"
@@ -91,9 +85,6 @@
                 ScreenProducts:
                     id: products
                     name: "products"
-                ScreenTables:
-                    id: tables
-                    name: "tables"
                 ScreenOrders:
                     id: orders
                     name: "orders"
@@ -127,47 +118,54 @@
             size_hint_x: 0.4
             id: list
 ##############################################################################################
-# Tables Screen - NavigationRail
-##############################################################################################
-<ScreenTables>
-    MDBoxLayout:
-        orientation: 'horizontal'
-        MDTabsPrimary:
-            id: tabs
-            size_hint_x: 0.6
-            pos_hint: {"top": 1}
-            allow_scroll: False
-            MDDivider:
-                orientation: "horizontal"
-            MDTabsCarousel:
-                id: related_content
-                size_hint_y: None
-                height: root.height - dp(100)
-                width: root.width
-        MDDivider:
-            orientation: "vertical"
-        ItemListDisplay:
-            size_hint_x: 0.4
-            id: list
-##############################################################################################
 # Orders Screen - NavigationRail
 ##############################################################################################
 <ScreenOrders>
     MDBoxLayout:
-        orientation: 'vertical'
-        
+        orientation: 'horizontal'
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: table_list
+        MDDivider:
+            orientation: "vertical"
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: order_list
+        MDDivider:
+            orientation: "vertical"
+        ScrollView:
+            size_hint_x: 0.4
+            MDList:
+                id: products_list
 ##############################################################################################
 # Charge Screen - NavigationRail
 ##############################################################################################
 <ScreenCharge>
     MDBoxLayout:
-        orientation: 'vertical'
-        MDLabel:
-            text: "Charge"
-            halign: "center"
-            theme_text_color: "Primary"
-        MDLabel:
-            text: "Welcome to Charge Screen"
-            halign: "center"
-            theme_text_color: "Primary"
+        orientation: 'horizontal'
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: table_list
+        MDDivider:
+            orientation: "vertical"
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: order_list
+        MDDivider:
+            orientation: "vertical"
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.4
+            ScrollView:
+                MDList:
+                    id: products_list
+            MDDivider:
+                orientation: "horizontal"
+            MDBoxLayout:
+                DecimalKeyboard:
+                    id: decimal_keyboard
 ##############################################################################################

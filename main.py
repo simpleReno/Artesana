@@ -64,30 +64,18 @@ class MainApp(MDApp):
     # Switch Screen Function
     def switch_screen(self, screen_name):
         self.root.ids.screen_manager.current = screen_name
-    # On Window Size
-    # def on_window_resize(self, *args):
-    #     if self.root:
-    #         self.root.ids.home.on_window_resize()
+    # Switch Navigation Drawer Function
     def switch_navigation_drawer(self, screen_name):
         self.root.ids.screen_manager.current = screen_name
         
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         if instance_tab:
             instance_tab.ids.tab_content.refresh_from_data()
-    # def add_tab(self):
-    #     tabs_home = self.root.ids.home.ids.products.ids.tabs
-    #     tab = MDTabsItem(
-    #         MDTabsItemIcon(icon="beer"),
-    #         MDTabsItemText(text="Category 5"),
-    #     )
-    #     tabs_home.add_widget(tab)
     # On Start
     def on_start(self):
         # Getting widgets using ids
         tabs_home = self.root.ids.home.ids.products.ids.tabs
-        tabs_tables = self.root.ids.home.ids.tables.ids.tabs
         home_content = self.root.ids.home.ids.products.ids.related_content
-        tables_content = self.root.ids.home.ids.tables.ids.related_content
         list = self.root.ids.home.ids.products.ids.list
         # Add content to the tabs
         for category in ["Category 1", "Category 2", "Category 3", "Category 4"]:
@@ -167,54 +155,6 @@ class MainApp(MDApp):
                 },
             ]
         )
-        for category in ["Category 1", "Category 2", "Category 3", "Category 4"]:
-            tab = MDTabsItem(
-                MDTabsItemIcon(icon="table-chair"),
-                MDTabsItemText(text=category),
-            )
-            tabs_tables.add_widget(tab)
-            tab_content = TabContent()
-            tab_content.data.extend(
-                [
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 1",
-                        "callback": lambda x: x,
-                    },
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 2",
-                        "callback": lambda x: x,
-                    },
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 3",
-                        "callback": lambda x: x,
-                    },
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 4",
-                        "callback": lambda x: x,
-                    },
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 5",
-                        "callback": lambda x: x,
-                    },
-                    {
-                        "viewclass": "ProductCard",
-                        "icon": "table-chair",
-                        "text": "Product 6",
-                        "callback": lambda x: x,
-                    },
-                ]
-            )
-            tables_content.add_widget(tab_content)
 #  Run App   
 if __name__ == "__main__":
     MainApp().run()

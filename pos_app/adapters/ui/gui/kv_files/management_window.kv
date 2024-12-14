@@ -1,0 +1,99 @@
+##############################################################################################
+# Management Window
+##############################################################################################
+<ManagementWindow>
+    id: manage
+    mg_bg_color: app.theme_cls.backgroundColor
+##############################################################################################
+#(1) Box Layout - NavigationRail
+##############################################################################################        
+    MDBoxLayout:
+        orientation: 'horizontal'
+##############################################################################################
+#(2) Navigation Rail
+##############################################################################################
+        MDNavigationRail:
+            id: nav_rail
+            type: "labeled"
+            md_bg_color: app.theme_cls.backgroundColor
+            NavigationRailItem:
+                icon: "beer"
+                text: "Tables"
+                screen: "tables"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "cart"
+                text: "Accounts"
+                screen: "accounts"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
+            NavigationRailItem:
+                icon: "history"
+                text: "Promotions"
+                screen: "promotions"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+            NavigationRailItem:
+                icon: "history"
+                text: "Devolutions"
+                screen: "devolutions"
+                on_touch_down: 
+                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
+##############################################################################################
+#(2) Third Box Layout - Content
+##############################################################################################
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: app.theme_cls.backgroundColor
+            padding: dp(10)
+##############################################################################################
+#(3) Inner Screen Manager
+##############################################################################################
+            MDScreenManager:
+                id: screen_manager
+                ScreenTables:
+                    id: tables
+                    name: "tables"
+                ScreenAccounts:
+                    id: accounts
+                    name: "accounts"
+                ScreenPromotions:
+                    id: promotions
+                    name: "promotions"
+                ScreenDevolutions:
+                    id: devolutions
+                    name: "devolutions"
+##############################################################################################
+# Tables Screen - NavigationRail
+##############################################################################################
+<ScreenTables>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        MDLabel:
+            text: "Tables"
+##############################################################################################
+# Accounts Screen - NavigationRail
+##############################################################################################
+<ScreenAccounts>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        MDLabel:
+            text: "Accounts"
+##############################################################################################
+# Promotions Screen - NavigationRail
+##############################################################################################
+<ScreenPromotions>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        MDLabel:
+            text: "Promotions"
+##############################################################################################
+# Devolutions Screen - NavigationRail
+##############################################################################################
+<ScreenDevolutions>
+    MDBoxLayout:
+        orientation: 'horizontal'
+        MDLabel:
+            text: "Devolutions"
+##############################################################################################

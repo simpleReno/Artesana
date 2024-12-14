@@ -157,12 +157,11 @@ class CheckItem(MDBoxLayout):
     text = StringProperty()
     group = StringProperty()
     active = BooleanProperty()
-class ExpansionPanelItem(MDExpansionPanel):
-    pass
-class TrailingPressedIconButton(
-    MDListItemTrailingIcon, ButtonBehavior, RotateBehavior):
-    pass
-class ExpansionInternalItem(MDListItem):
-    text = StringProperty()
-    icon = StringProperty()
-    supporting_text = StringProperty()
+    
+class DecimalKeyboard(MDBoxLayout):
+    
+    def on_click(self, instance):
+        self.ids.text_field.text += instance.text
+    
+    def on_backspace(self):
+        self.ids.text_field.text = self.ids.text_field.text[:-1]

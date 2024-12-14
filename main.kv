@@ -82,12 +82,14 @@ MDNavigationLayout:
                 screen: "home"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
             NavigationDrawerItem:
                 icon: "clock"
                 text: "Clock In/Out"
                 screen: "clock_in_out"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
 ##############################################################################################
             MDNavigationDrawerDivider:
 ##############################################################################################
@@ -97,18 +99,21 @@ MDNavigationLayout:
                 screen: "inventory"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
             NavigationDrawerItem:
                 icon: "bookshelf"
                 text: "Reports"
                 screen: "reports"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
             NavigationDrawerItem:
                 icon: "calendar-account"
                 text: "Payroll"
                 screen: "payroll"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
 ##############################################################################################
             MDNavigationDrawerDivider:
 ##############################################################################################
@@ -118,12 +123,14 @@ MDNavigationLayout:
                 screen: "manage"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
             NavigationDrawerItem:
                 icon: "tools"
                 text: "Settings"
                 screen: "settings"
                 on_touch_down: 
                     app.switch_navigation_drawer(self.screen) if self.collide_point(*args[1].pos) else False
+                    app.root.ids.nav_drawer.set_state('close')
 ##############################################################################################
             MDNavigationDrawerDivider: 
 ##############################################################################################
