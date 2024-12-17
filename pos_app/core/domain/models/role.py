@@ -1,6 +1,7 @@
 import uuid
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 from pos_app.core.domain.models.base import Base, employee_role, role_turn
 
 
@@ -8,19 +9,11 @@ class Role(Base):
     
     __tablename__ = 'roles'
 
-    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column(String, unique=True)
     description = Column(String)
     employees = relationship('Employee', secondary=employee_role, back_populates='roles')
     turns = relationship('Turn', secondary=role_turn, back_populates='roles')
-    
-    def __int__ (self, name: str, description: str):
-        self.id_ = uuid.uuid4()
-        self.name = name
-        self.description = description
-        self.employees = {}
-        self.turns = {}
-
 
     def to_dict(self) -> dict:
         return {

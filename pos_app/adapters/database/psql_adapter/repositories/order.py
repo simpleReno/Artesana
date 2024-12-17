@@ -2,9 +2,6 @@ from sqlalchemy.orm import Session
 from pos_app.core.domain.models.order import Order
 from pos_app.core.application.interfaces.repository import IOrderRepository
 
-
-
-
 class OrderRepository(IOrderRepository):
     def __init__(self, session: Session):
         self.session = session

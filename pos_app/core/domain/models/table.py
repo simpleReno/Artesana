@@ -3,25 +3,18 @@ from decimal import Decimal
 from typing import List
 from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 from pos_app.core.domain.models.order import Order
 
 class Table:
     __tablename__ = 'tables'
 
-    id_ = Column("id" ,String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column("name",String, unique=True)
     seats = Column("seats", Integer)
     orders = relationship('Order', back_populates='tables')
     status = Column("status", String)
     total = Column("total", Float)
-    
-    def __init__(self, number: str):
-        self.id_ = uuid.uuid4()
-        self.number = number
-        self.seats = 0
-        self.orders = {}
-        self.status = "open"
-        self.total = Decimal(0)
         
     def to_dict(self) -> dict:
         return {
@@ -32,6 +25,11 @@ class Table:
             "status": self.status,
             "total": float(self.total)
         }
+        
+    def clear_table(self) -> None:
+        self.orders = {}
+        self.total = Decimal(0)
+        self.status = "open"
         
     def set_seats(self, seats: int) -> None:
         self.seats = seats

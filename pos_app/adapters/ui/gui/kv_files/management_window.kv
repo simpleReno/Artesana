@@ -17,16 +17,10 @@
             type: "labeled"
             md_bg_color: app.theme_cls.backgroundColor
             NavigationRailItem:
-                icon: "beer"
-                text: "Tables"
-                screen: "tables"
-                on_touch_down: 
-                    root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False
-            NavigationRailItem:
                 icon: "cart"
                 text: "Accounts"
                 screen: "accounts"
-                on_touch_down: 
+                on_touch_down:
                     root.switch_navigation_rail(self.screen) if self.collide_point(*args[1].pos) else False  
             NavigationRailItem:
                 icon: "history"
@@ -52,9 +46,6 @@
 ##############################################################################################
             MDScreenManager:
                 id: screen_manager
-                ScreenTables:
-                    id: tables
-                    name: "tables"
                 ScreenAccounts:
                     id: accounts
                     name: "accounts"
@@ -65,21 +56,28 @@
                     id: devolutions
                     name: "devolutions"
 ##############################################################################################
-# Tables Screen - NavigationRail
-##############################################################################################
-<ScreenTables>
-    MDBoxLayout:
-        orientation: 'horizontal'
-        MDLabel:
-            text: "Tables"
-##############################################################################################
 # Accounts Screen - NavigationRail
 ##############################################################################################
 <ScreenAccounts>
     MDBoxLayout:
         orientation: 'horizontal'
-        MDLabel:
-            text: "Accounts"
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: table_list
+        MDDivider:
+            orientation: "vertical"
+        ScrollView:
+            size_hint_x: 0.3
+            MDList:
+                id: order_list
+        MDDivider:
+            orientation: "vertical"
+        ScrollView:
+            size_hint_x: 0.4
+            MDList:
+                id: products_list
+
 ##############################################################################################
 # Promotions Screen - NavigationRail
 ##############################################################################################

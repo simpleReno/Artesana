@@ -4,12 +4,13 @@ import datetime
 from decimal import Decimal
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.base import Base, employee_role, employee_turn, payment_employee
 
 class Employee(Base):
     __tablename__ = 'employees'
 
-    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     first_name = Column(String)
     last_name = Column(String)
     email = Column(String, unique=True)
@@ -19,26 +20,6 @@ class Employee(Base):
     payments = relationship('Payment', secondary=payment_employee, back_populates='employees')
     start_date = Column(DateTime)
     stop_date = Column(DateTime)
-    
-    def __init__(self, first_name: str, 
-                 last_name: str, 
-                 roles: dict[str, str],
-                 turns: dict[str, str],
-                 start_date: datetime.datetime, 
-                 stop_date: datetime.datetime = None, 
-                 email: str="",
-                 pin: str=""):
-        self.id_ = uuid.uuid4()
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.pin = pin
-        self.roles = roles
-        self.turns = turns
-        self.payments = {}
-        self.start_date = start_date
-        self.stop_date = stop_date
-        self.last_time_added = datetime.datetime.now()
         
     def to_dict(self) -> dict:
         return {

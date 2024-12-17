@@ -3,6 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from sqlalchemy import Column, String, DateTime, Float
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.employee import Employee
 from pos_app.core.domain.models.role import Role
 from pos_app.core.domain.models.payment import Payment
@@ -11,7 +12,7 @@ from pos_app.core.domain.models.base import Base, employee_turn, role_turn, paym
 class Turn(Base):
     __tablename__ = 'turns'
 
-    id_ = Column("turn_id", String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     start_time = Column("start_time", DateTime)
     end_time = Column("end_time", DateTime)
     status = Column("status", String)
@@ -19,17 +20,6 @@ class Turn(Base):
     roles = relationship('Role', secondary=role_turn, back_populates='turns')
     payments = relationship('Payment', secondary=payment_turn, back_populates='turns')
     total = Column("total", Float)
-    
-    def __init__(self, turn_start: datetime, turn_end: datetime):
-        self.turn_id = uuid.uuid4()
-        self.start_time = turn_start
-        self.end_time = turn_end
-        self.status = ""
-        self.employees = {}
-        self.roles = {}
-        self.payments = {}
-        self.total = Decimal(0)
-
 
     def to_dict(self) -> dict:
         return {

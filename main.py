@@ -37,6 +37,10 @@ from pos_app.adapters.ui.gui.baseclass.inventory_window import InventoryWindow
 from pos_app.adapters.ui.gui.baseclass.settings_window import SettingsWindow
 from pos_app.adapters.ui.gui.baseclass.management_window import ManagementWindow
 from pos_app.adapters.ui.gui.baseclass.payroll_window import PayrollWindow
+# Import Ports and Adapters
+from pos_app.adapters.database.psql_adapter.connection import get_session
+from pos_app.adapters.database.psql_adapter.repositories.order import OrderRepository
+from pos_app.core.domain.services.order import OrderService
 # Load Main App
 class MainApp(MDApp):
     # init App
@@ -61,6 +65,7 @@ class MainApp(MDApp):
             self.theme_cls.primary_palette = "Red"
         else:
             self.theme_cls.primary_palette = "Blue"
+    # Get Session
     # Switch Screen Function
     def switch_screen(self, screen_name):
         self.root.ids.screen_manager.current = screen_name
@@ -157,4 +162,11 @@ class MainApp(MDApp):
         )
 #  Run App   
 if __name__ == "__main__":
+    
+    Session = get_session()
+    
+    order_repository = OrderRepository(Session)
+    order_service = OrderService(order_repository)
+    
+    
     MainApp().run()

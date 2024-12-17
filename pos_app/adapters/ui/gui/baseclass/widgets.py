@@ -64,13 +64,15 @@ class SubCategoryItem(MDBoxLayout):
         self.orientation = "vertical"
         self.adaptive_size = True
         self.padding = dp(5)
-        self.text_field = self.add_widget(self.create_text_field())
+        self.spacing = dp(5)
+        self.text_field = self.add_widget(self.create_text_field("Subcategory"))
+        self.description_field = self.add_widget(self.create_text_field("Description"))
         self.box_buttons = self.add_widget(self.create_box_buttons())
         
-    def create_text_field(self):
+    def create_text_field(self, hint_text):
         text_field = MDTextField(
             MDTextFieldHintText(
-                text="Subcategory"
+                text = hint_text
             ),
             mode="filled",
         )

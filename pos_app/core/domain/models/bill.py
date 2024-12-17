@@ -3,13 +3,14 @@ from decimal import Decimal
 from sqlalchemy import Column, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.base import Base
 
 
 class Bill(Base):
     __tablename__ = 'bills'
 
-    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     total = Column(Float)
     date = Column(DateTime, default=func.now())
     orders = relationship('Order', back_populates='bills')

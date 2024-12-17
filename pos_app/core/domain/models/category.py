@@ -1,24 +1,26 @@
 import uuid
 import datetime
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.base import Base
 
 
 class Category(Base):
     __tablename__ = 'categories'
 
-    id_ = Column(String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column(String, unique=True)
-    products = relationship('Product', back_populates='categories')
+    parent_id = Column(String, ForeignKey('categories.id_'), nullable=True)
     description = Column(String)
     
-    def __init__(self, name: str, description: str):
-        self.id_ = uuid.uuid4()
-        self.name = name
-        self.description = description
-        self.products = {}
-        self.last_time_added = datetime.datetime.now()
+    subcategories = relationship("Categories",
+        backref="parent",
+        remote_side=[id],
+        cascade="all, delete-orphan",
+    )
+    
+    products = relationship("Product", back_populates="category")
 
     def to_dict(self) -> dict:
         return {
@@ -26,6 +28,7 @@ class Category(Base):
             "name": self.name,
             "description": self.description,
             "products": {product[id]:product for product in self.products},
+            "subcategories": {category[id]:category for category in self.subcategories},
             "last_time_added": self.last_time_added
         }
     
@@ -46,6 +49,16 @@ class Category(Base):
     
     def add_product(self, product: dict) -> None:
         self.products[product.id] = product
+        
+    def get_subcategories(self) -> dict[str, dict]:
+        return self.subcategories
+    
+    def add_subcategory(self, category: dict) -> None:
+        self.subcategories[category.id] = category
+        
+    def remove_subcategory(self, category: dict) -> None:
+        if category.id in self.subcategories:
+            del self.subcategories[category.id]
         
     def remove_product(self, product: dict) -> None:
         if product.id in self.products:

@@ -1,38 +1,30 @@
 import datetime
-import uuid
 import datetime
+import uuid
 from typing import Any
 from decimal import Decimal
 from sqlalchemy import Column, String, Float, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.base import Base
 
 class Product(Base):
     __tablename__ = 'products'
 
-    id_ = Column("id", String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column("name", String, unique=True)
     amount = Column("amount", Integer)
     price = Column("price", Float)
     description = Column("description", String)
     last_time_added = Column("last_time_added", DateTime, default=datetime.datetime.now())
-    category_id = Column("category_id", String, ForeignKey('categories.id'), nullable=False)
+    category_id = Column("category_id", String, ForeignKey('categories.id_'), nullable=False)
     
     category = relationship('Category', back_populates='products')
     orders = relationship('OrderProduct', back_populates='product')
     
-    def __init__(self, name: str, price: Decimal, amount: int, description: str="", category: str=""):
-        self.id_ = uuid.uuid4()
-        self.name = name
-        self.price = price
-        self.description = description
-        self.amount = amount
-        self.last_time_added = datetime.datetime.now()
-        self.category_id = category
-    
     def to_dict(self) -> dict:
         return {
-            "id": self.id_,
+            "id": self.id,
             "name": self.name,
             "price": self.price,
             "description": self.description,
@@ -42,7 +34,7 @@ class Product(Base):
         }
         
     def get_id(self) -> int:
-        return self.id_
+        return self.id
     
     def get_name(self) -> str:
         return self.name
@@ -86,10 +78,10 @@ class Product(Base):
         return NotImplemented
     
     def __hash__(self) -> int:
-        return hash(self.id_)
+        return hash(self.id)
     
     def __repr__(self) -> str:
-        return f"Product(id={self.id_}, name={self.name}, price={self.price}, amount={self.amount})"
+        return f"Product(id={self.id}, name={self.name}, price={self.price}, amount={self.amount})"
     
     def __str__(self) -> str:
         return f"Product {self.name}"

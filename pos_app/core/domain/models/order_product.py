@@ -14,13 +14,6 @@ class OrderProduct(Base):
     # Relationships
     order = relationship('Order', back_populates='products')
     product = relationship('Product', back_populates='orders')
-    
-    def __int__(self, order_id: str, product_id: str, quantity: int, price_at_order: float, discount: float = 0.0) -> None:
-        self.order_id = order_id
-        self.product_id = product_id
-        self.quantity = quantity
-        self.price_at_order = price_at_order
-        self.discount = discount
         
     def to_dict(self) -> dict:
         return {

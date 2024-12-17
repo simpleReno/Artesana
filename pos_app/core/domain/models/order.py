@@ -5,6 +5,7 @@ from typing import Any
 from dotenv import load_dotenv
 from sqlalchemy import Column, String, Enum, Float, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.status import Status
 from pos_app.core.domain.models.base import Base, payment_order
@@ -13,7 +14,7 @@ load_dotenv()
 class Order(Base):
     __tablename__ = 'orders'
 
-    id_ = Column("id", String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column("name", String)
     type = Column("type", String)
     products = relationship('OrderProduct', back_populates='orders')
@@ -22,16 +23,6 @@ class Order(Base):
     table = relationship('Table', back_populates='orders')
     status = Column("status", Enum)
     total = Column("total", Float)
-    
-    def __init__(self, type: str, products: dict[str, dict], table_id: str, status: Status = Status("open"), name: str = ""):
-        self.id_ = uuid.uuid4()
-        self.name = name
-        self.type = type
-        self.products = products
-        self.status = status
-        self.payments = {}
-        self.table_id = table_id
-        self.total = float(Decimal(0))
 
     def to_dict(self) -> dict:
             return {

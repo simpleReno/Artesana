@@ -6,13 +6,14 @@ from decimal import Decimal
 from dotenv import load_dotenv
 from sqlalchemy import Column, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.base import Base, payment_order
 load_dotenv()
 
 class Payment(Base):
     __tablename__ = 'payments'
 
-    id_ = Column("id", String, primary_key=True, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     payment_type = Column("payment_type", String)
     payed = Column("payed", Float)
     date = Column("date", DateTime)
@@ -25,15 +26,6 @@ class Payment(Base):
     bill = relationship('Bill', back_populates='payments')
     bill_amount = Column("bill_amount", Float)
     bill_total = Column("bill_total", Float)
-    
-    def __init__(self, payment_type: str, orders: dict[str, dict], order_total: Decimal):
-        self.id_ = uuid.uuid4().hex()
-        self.type = payment_type
-        self.payed = Decimal(0)
-        self.date = datetime.datetime.now()
-        self.orders = {order[id]: order for order in orders.items()}
-        self.total = order_total
-        self.date = datetime.datetime.now()
     
     def to_dict(self) -> dict:
         return {
