@@ -1,6 +1,7 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from contextlib import contextmanager
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -16,11 +17,15 @@ port = os.getenv('DB_PORT')
 
 SQLALCHEMY_DATABASE_URL = f'postgresql://{user}:{password}@{host}:{port}/{database}'
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo="debug")
+engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=False)
 
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+def get_engine():
+    return engine
 
+@contextmanager
 def get_session():
+    engine = get_engine()
+    Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = Session()
     try:
         yield session
