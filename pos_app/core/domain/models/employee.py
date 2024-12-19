@@ -5,7 +5,7 @@ from decimal import Decimal
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
-from pos_app.core.domain.models.base import Base, employee_role, employee_turn, payment_employee
+from pos_app.core.domain.models.base import Base
 
 class Employee(Base):
     __tablename__ = 'employees'
@@ -15,9 +15,9 @@ class Employee(Base):
     last_name = Column(String)
     email = Column(String, unique=True)
     pin = Column(String, unique=True, nullable=False)
-    roles = relationship('Role', secondary=employee_role, back_populates='employees')
-    turns = relationship('Turn', secondary=employee_turn, back_populates='employees')
-    payments = relationship('Payment', secondary=payment_employee, back_populates='employees')
+    roles = relationship('Role', back_populates='employees')
+    turns = relationship('Turn', back_populates='employees')
+    payments = relationship('Payment', back_populates='employees')
     start_date = Column(DateTime)
     stop_date = Column(DateTime)
         

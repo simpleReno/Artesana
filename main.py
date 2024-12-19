@@ -171,5 +171,4 @@ if __name__ == "__main__":
         order_repository = OrderRepository(session)
         order_service = OrderService(order_repository)
     
-    
     MainApp().run()

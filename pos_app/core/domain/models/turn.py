@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.employee import Employee
 from pos_app.core.domain.models.role import Role
 from pos_app.core.domain.models.payment import Payment
-from pos_app.core.domain.models.base import Base, employee_turn, role_turn, payment_turn
+from pos_app.core.domain.models.base import Base
 
 class Turn(Base):
     __tablename__ = 'turns'
@@ -16,9 +16,9 @@ class Turn(Base):
     start_time = Column("start_time", DateTime)
     end_time = Column("end_time", DateTime)
     status = Column("status", String)
-    employees = relationship('Employee', secondary=employee_turn, back_populates='turns')
-    roles = relationship('Role', secondary=role_turn, back_populates='turns')
-    payments = relationship('Payment', secondary=payment_turn, back_populates='turns')
+    employees = relationship('Employee', back_populates='turns')
+    roles = relationship('Role', back_populates='turns')
+    payments = relationship('Payment', back_populates='turns')
     total = Column("total", Float)
 
     def to_dict(self) -> dict:

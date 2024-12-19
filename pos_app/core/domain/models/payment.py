@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from sqlalchemy import Column, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
-from pos_app.core.domain.models.base import Base, payment_order
+from pos_app.core.domain.models.base import Base
 load_dotenv()
 
 class Payment(Base):
@@ -17,7 +17,7 @@ class Payment(Base):
     payment_type = Column("payment_type", String)
     payed = Column("payed", Float)
     date = Column("date", DateTime)
-    orders = relationship('Order', secondary=payment_order, back_populates='payments')
+    orders = relationship('Order', back_populates='payments')
     turn_id = Column("turn_id", String, ForeignKey('turns.id'), nullable=False)
     turn = relationship('Turn', back_populates='payments')
     employee_id = Column("employee_id", String, ForeignKey('employees.id'), nullable=False)

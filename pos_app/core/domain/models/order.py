@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID  # Use this for PostgreSQL
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.status import Status
-from pos_app.core.domain.models.base import Base, payment_order
+from pos_app.core.domain.models.base import Base
 load_dotenv()
 
 class Order(Base):
@@ -18,7 +18,7 @@ class Order(Base):
     name = Column("name", String)
     type = Column("type", String)
     products = relationship('OrderProduct', back_populates='orders')
-    payments = relationship('Payment',secondary=payment_order, back_populates='orders')
+    payments = relationship('Payment', back_populates='orders')
     table_id = Column("table_id", String, ForeignKey('tables.id'), nullable=False)
     table = relationship('Table', back_populates='orders')
     status = Column("status", Enum)
