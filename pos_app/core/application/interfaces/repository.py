@@ -2,9 +2,7 @@ from abc import ABC, abstractmethod
 from pos_app.core.domain.models.order import Order
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.table import Table
-from pos_app.core.domain.models.turn import Turn
 from pos_app.core.domain.models.payment import Payment
-from pos_app.core.domain.models.employee import Employee
 
 
 """_summary_
@@ -99,26 +97,6 @@ class ICategoryRepository(ABC):
     def delete(self, category: dict):
         pass
 ############################################################################################################
-class IEmployeeRepository(ABC):
-    @abstractmethod
-    def save(self, employee: Employee):
-        pass
-    
-    @abstractmethod
-    def get(self, employee_id: str):
-        pass
-    
-    @abstractmethod
-    def update(self, employee_id: str, employee: Employee):
-        pass
-    
-    @abstractmethod
-    def get_all(self):
-        pass
-    
-    @abstractmethod
-    def delete(self, employee_id: str):
-        pass
 ############################################################################################################
 class IRoleRepository(ABC):
     @abstractmethod
@@ -141,26 +119,6 @@ class IRoleRepository(ABC):
     def delete(self, role_id: str):
         pass
 ############################################################################################################
-class ITurnRepository(ABC):
-    @abstractmethod
-    def save(self, turn: Turn):
-        pass
-    
-    @abstractmethod
-    def get(self, turn_id: str):
-        pass
-    
-    @abstractmethod
-    def update(self, turn_id, turn: Turn):
-        pass
-    
-    @abstractmethod
-    def get_all(self):
-        pass
-    
-    @abstractmethod
-    def delete(self, turn_id: str):
-        pass
 ############################################################################################################
 class IPaymentRepository(ABC):
     @abstractmethod

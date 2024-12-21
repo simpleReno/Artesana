@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float
+from sqlalchemy import Column, String, Float, Enum
 from sqlalchemy.orm import relationship
 from pos_app.core.domain.models.base import Base, generate_uuid
 
@@ -20,7 +20,7 @@ class Table(Base):
     __tablename__ = "tables"
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
-    table_type = Column(String(50))
+    table_type = Column(Enum("indoor", "outdoor", "bar", "to go", name="table_type"), default="indoor" , nullable=False)
     total = Column(Float, default=0.0)
 
     customers = relationship("Customer", back_populates="table")
@@ -34,4 +34,4 @@ class Table(Base):
         }
         
     def __repr__(self):
-        return f"<Table(table_type='{self.table_type}')>"
+        return f"<Table(id={self.id}, table_type={self.table_type}, total={self.total})>"

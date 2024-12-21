@@ -4,8 +4,6 @@ from typing import List
 from pos_app.core.domain.models.order import Order
 from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.table import Table
-from pos_app.core.domain.models.employee import Employee
-from pos_app.core.domain.models.turn import Turn
 from pos_app.core.domain.models.payment import Payment
 
 class IOrderUser(ABC):
@@ -101,26 +99,6 @@ class ITableUser(ABC):
     def delete_table(self, table_id: str):
         pass
 ############################################################################################################
-class IEmployeeUser(ABC):
-    @abstractmethod
-    def create_employee(self, employee: Employee):
-        pass
-    
-    @abstractmethod
-    def update_employee(self, employee_id: str, employee: Employee):
-        pass
-    
-    @abstractmethod
-    def get_employee(self, employee_id: str):
-        pass
-    
-    @abstractmethod
-    def get_all_employees(self):
-        pass
-    
-    @abstractmethod
-    def delete_employee(self, employee_id: str):
-        pass
 ############################################################################################################
 class ICategoryUser(ABC):
     @abstractmethod
@@ -164,26 +142,6 @@ class IRoleUser(ABC):
     def delete_role(self, role_id: str):
         pass
 ############################################################################################################
-class ITurnUser(ABC):
-    @abstractmethod
-    def create_turn(self, turn: Turn):
-        pass
-    
-    @abstractmethod
-    def update_turn(self, turn_id: str, turn: Turn):
-        pass
-    
-    @abstractmethod
-    def get_turn(self, turn_id: str):
-        pass
-    
-    @abstractmethod
-    def get_all_turns(self):
-        pass
-    
-    @abstractmethod
-    def delete_turn(self, turn_id: str):
-        pass
 ############################################################################################################
 class IPaymentUser(ABC):
     @abstractmethod
