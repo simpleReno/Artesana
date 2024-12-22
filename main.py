@@ -42,7 +42,15 @@ from pos_app.adapters.database.psql_adapter.connection import get_session, get_e
 from pos_app.adapters.database.psql_adapter.repositories.order import OrderRepository
 from pos_app.core.domain.services.order import OrderService
 #Import Base database
-from pos_app.core.domain.models.base import Base
+from pos_app.core.domain.models.base import metadata
+from pos_app.core.domain.models.customer import Customer
+from pos_app.core.domain.models.order import Order
+from pos_app.core.domain.models.payment import Payment
+from pos_app.core.domain.models.product import Product
+from pos_app.core.domain.models.table import Table
+from pos_app.core.domain.models.delivery import Delivery
+from pos_app.core.domain.models.order_detail import OrderDetail
+from pos_app.core.domain.models.category import Category
 # Load Main App
 class MainApp(MDApp):
     # init App
@@ -166,7 +174,14 @@ class MainApp(MDApp):
 if __name__ == "__main__":
 
     Engine = get_engine()
-    Base.metadata.create_all(Engine)
+    metadata.create_all(Engine, tables=[Category.__table__,
+                                        Delivery.__table__,
+                                        Customer.__table__,
+                                        Order.__table__,
+                                        Payment.__table__,
+                                        Product.__table__,
+                                        Table.__table__,
+                                        OrderDetail.__table__])
     with get_session() as session:
         order_repository = OrderRepository(session)
         order_service = OrderService(order_repository)
