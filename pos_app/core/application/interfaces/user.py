@@ -1,3 +1,5 @@
+# This file defines the interfaces for different user types in the POS application.
+
 from abc import ABC, abstractmethod
 from decimal import Decimal
 from typing import List
@@ -6,6 +8,31 @@ from pos_app.core.domain.models.product import Product
 from pos_app.core.domain.models.table import Table
 from pos_app.core.domain.models.payment import Payment
 
+############################################################################################################
+# Interface for customer user
+class ICustomerUser(ABC):
+    @abstractmethod
+    def create_customer(self, customer: dict):
+        pass
+    
+    @abstractmethod
+    def update_customer(self, customer_id: str, customer: dict):
+        pass
+    
+    @abstractmethod
+    def get_customer(self, customer_id: str):
+        pass
+    
+    @abstractmethod
+    def get_all_customers(self):
+        pass
+    
+    @abstractmethod
+    def delete_customer(self, customer_id: str):
+        pass
+
+############################################################################################################
+# Interface for order user
 class IOrderUser(ABC):
     @abstractmethod
     def create_order(self, order: Order) -> Order:
@@ -54,8 +81,9 @@ class IOrderUser(ABC):
     @abstractmethod
     def get_total(self, order_id: str) -> Decimal:
         pass
-    
+
 ############################################################################################################
+# Interface for product user
 class IProductUser(ABC):
     @abstractmethod
     def create_product(self, product: Product):
@@ -99,7 +127,6 @@ class ITableUser(ABC):
     def delete_table(self, table_id: str):
         pass
 ############################################################################################################
-############################################################################################################
 class ICategoryUser(ABC):
     @abstractmethod
     def create_category(self, category: dict):
@@ -120,28 +147,6 @@ class ICategoryUser(ABC):
     @abstractmethod
     def delete_category(self, category_id: str):
         pass
-############################################################################################################
-class IRoleUser(ABC):
-    @abstractmethod
-    def create_role(self, role: dict):
-        pass
-    
-    @abstractmethod
-    def update_role(self, role_id: str, role: dict):
-        pass
-    
-    @abstractmethod
-    def get_role(self, role_id: str):
-        pass
-    
-    @abstractmethod
-    def get_all_roles(self):
-        pass
-    
-    @abstractmethod
-    def delete_role(self, role_id: str):
-        pass
-############################################################################################################
 ############################################################################################################
 class IPaymentUser(ABC):
     @abstractmethod

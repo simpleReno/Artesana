@@ -14,7 +14,27 @@ from pos_app.core.domain.models.payment import Payment
 # The service interfaces define the methods that the service classes must implement to interact with the repository classes.
 # The service classes are responsible for the business logic of the application. The service classes use the repository classes
 # to interact with the database.
-
+############################################################################################################
+class ICustomerService(ABC):
+    @abstractmethod
+    def create_customer(self, customer: dict):
+        pass
+    
+    @abstractmethod
+    def update_customer(self, customer_id: str, customer: dict):
+        pass
+    
+    @abstractmethod
+    def get_customer(self, customer_id: str):
+        pass
+    
+    @abstractmethod
+    def get_all_customers(self):
+        pass
+    
+    @abstractmethod
+    def delete_customer(self, customer_id: str):
+        pass
 ############################################################################################################
 class IOrderService(ABC):
     @abstractmethod
@@ -109,7 +129,6 @@ class ITableService(ABC):
     def delete_table(self, table_id: str):
         pass
 ############################################################################################################
-############################################################################################################
 class ICategoryService(ABC):
     @abstractmethod
     def create_category(self, category: dict):
@@ -130,28 +149,6 @@ class ICategoryService(ABC):
     @abstractmethod
     def delete_category(self, category_id: str):
         pass
-############################################################################################################
-class IRoleService(ABC):
-    @abstractmethod
-    def create_role(self, role: dict):
-        pass
-    
-    @abstractmethod
-    def update_role(self, role_id: str, role: dict):
-        pass
-    
-    @abstractmethod
-    def get_role(self, role_id: str):
-        pass
-    
-    @abstractmethod
-    def get_all_roles(self):
-        pass
-    
-    @abstractmethod
-    def delete_role(self, role_id: str):
-        pass
-############################################################################################################
 ############################################################################################################
 class IPaymentService(ABC):
     @abstractmethod

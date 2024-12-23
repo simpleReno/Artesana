@@ -41,6 +41,10 @@ from pos_app.adapters.ui.gui.baseclass.payroll_window import PayrollWindow
 from pos_app.adapters.database.psql_adapter.connection import get_session, get_engine
 from pos_app.adapters.database.psql_adapter.repositories.order import OrderRepository
 from pos_app.core.domain.services.order import OrderService
+from pos_app.adapters.ui.gui.user import OrderUser
+from pos_app.adapters.database.psql_adapter.repositories.category import CategoryRepository
+from pos_app.core.domain.services.category import CategoryService
+from pos_app.adapters.ui.gui.user import CategoryUser
 #Import Base database
 from pos_app.core.domain.models.base import metadata
 from pos_app.core.domain.models.customer import Customer
@@ -64,7 +68,14 @@ class MainApp(MDApp):
         self.theme_cls.theme_styled_switch_animation_duration = 0.2
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Red"
-        return None
+        
+        order_repository = OrderRepository(get_session())
+        order_service = OrderService(order_repository)
+        order_user = OrderUser(order_service)
+        category_repository = CategoryRepository(get_session())
+        category_service = CategoryService(category_repository)
+        category_user = CategoryUser(category_service)
+        return 
     # Set Theme Style
     def switch_theme_style(self):
         if self.theme_cls.theme_style == "Dark":
@@ -182,8 +193,6 @@ if __name__ == "__main__":
                                         Product.__table__,
                                         Table.__table__,
                                         OrderDetail.__table__])
-    with get_session() as session:
-        order_repository = OrderRepository(session)
-        order_service = OrderService(order_repository)
+
     
     MainApp().run()

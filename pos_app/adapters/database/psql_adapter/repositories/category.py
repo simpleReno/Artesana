@@ -7,15 +7,9 @@ class CategoryRepository(ICategoryRepository):
         self.session = session
     def save(self, category: Category) -> None:
         try:
-            category_entity = Category(
-                id = category.id,
-                name = category.name,
-                description = category.description
-            )
-            self.session.add(category_entity)
+            self.session.add(category)
             self.session.commit()
-            self.session.refresh(category_entity)
-
+            self.session.refresh(category)
         except Exception as e:
             raise e
         finally:

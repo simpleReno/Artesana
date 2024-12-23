@@ -13,6 +13,27 @@ from pos_app.core.domain.models.payment import Payment
 # responsible for the data access layer of the application. The repository interfaces define the methods that
 # the repository classes must implement to interact with the database. 
 ############################################################################################################
+class ICustomerRepository(ABC):
+    @abstractmethod
+    def save(self, customer: dict):
+        pass
+    
+    @abstractmethod
+    def get(self, customer_id: str):
+        pass
+    
+    @abstractmethod
+    def update(self, customer_id: str, customer: dict):
+        pass
+    
+    @abstractmethod
+    def get_all(self):
+        pass
+    
+    @abstractmethod
+    def delete(self, customer_id: str):
+        pass
+############################################################################################################
 class IOrderRepository(ABC):
     @abstractmethod
     def save(self, order: Order):
