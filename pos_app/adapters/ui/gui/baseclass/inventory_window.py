@@ -1,21 +1,24 @@
 # Import Kivy Properties
 from kivy.properties import ObjectProperty
-from kivy.properties import ListProperty
 # Import KivyMD Modules
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.menu import MDDropdownMenu
-# Import Custom Modules
-from pos_app.adapters.ui.gui.baseclass.widgets import NavigationRailItem, SubCategoryItem, ItemGroup
-
 class InventoryWindow(MDScreen):
+    category_user = ObjectProperty()
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.title = 'Inventory'
+        
+    def on_pre_enter(self):
+        self.ids.screen_manager.get_screen('product').category_user = self.category_user
+        self.ids.screen_manager.get_screen('category').category_user = self.category_user
+        self.ids.screen_manager.get_screen('service').category_user = self.category_user
 
     def switch_navigation_rail(self, screen_name):
         self.ids.screen_manager.current = screen_name
         
 class ScreenProduct(MDScreen):
+    category_user = ObjectProperty()
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.menu_items = [
@@ -26,7 +29,7 @@ class ScreenProduct(MDScreen):
         self.menu = MDDropdownMenu(
             items=self.menu_items
         )
-        
+       
     def open_menu(self):
         if not self.menu.parent:
             self.menu.caller = self.ids.drop_text
@@ -37,6 +40,8 @@ class ScreenProduct(MDScreen):
         self.menu.dismiss()
         
 class ScreenCategory(MDScreen):
+    category_user = ObjectProperty()
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
@@ -58,6 +63,7 @@ class ScreenCategory(MDScreen):
         except ValueError as e:
             print("Error:", e)  # Debugging statement
 class ScreenService(MDScreen):
+    category_user = ObjectProperty()
     pass
     
    

@@ -1,6 +1,5 @@
 # import Kivy Modules
 from kivy.metrics import dp
-from kivy.animation import Animation
 # Import KivyMD Modules
 from kivymd.uix.screen import MDScreen
 class HomeWindow(MDScreen):

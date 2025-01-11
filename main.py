@@ -1,50 +1,21 @@
-# Import Python Libraries
-from dotenv import load_dotenv
 # Import Purge Cache Function
 from pos_app.purge_pycache import delete_pycache
 delete_pycache()  # Call this function at the start of your script
-# Import Kivy
-from kivy.core.window import Window 
-from kivy.lang import Builder
-from kivy.metrics import dp
-from kivy.clock import Clock
-from kivy.weakproxy import WeakProxy
-# Import Kivy Properties
-from kivy.properties import StringProperty
-from kivy.properties import ListProperty
-# Import Kivy Components
-from kivy.uix.scatter import Scatter
-# Import KivyMD
-from kivymd.icon_definitions import md_icons
-from kivymd.font_definitions import fonts_path
+# Import KivyMD APP
 from kivymd.app import MDApp
 # Import KivyMD Components
-from kivymd.uix.list import MDListItem
 from kivymd.uix.tab import MDTabsItem, MDTabsItemIcon, MDTabsItemText
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.screenmanager import MDScreenManager
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.navigationrail import MDNavigationRailItem
-from kivymd.uix.navigationdrawer import MDNavigationDrawerItem
-from kivymd.uix.card import MDCard
-from kivymd.uix.recycleview import RecycleView
 # Import baseclass
-from pos_app.adapters.ui.gui.baseclass.widgets import ProductCard, TabContent
-from pos_app.adapters.ui.gui.baseclass.home_window import HomeWindow
-from pos_app.adapters.ui.gui.baseclass.clock_window import ClockWindow
-from pos_app.adapters.ui.gui.baseclass.reports_window import ReportsWindow
-from pos_app.adapters.ui.gui.baseclass.inventory_window import InventoryWindow
-from pos_app.adapters.ui.gui.baseclass.settings_window import SettingsWindow
-from pos_app.adapters.ui.gui.baseclass.management_window import ManagementWindow
-from pos_app.adapters.ui.gui.baseclass.payroll_window import PayrollWindow
+from pos_app.adapters.ui.gui.baseclass.widgets import TabContent
+
 # Import Ports and Adapters
 from pos_app.adapters.database.psql_adapter.connection import get_session, get_engine
 from pos_app.adapters.database.psql_adapter.repositories.order import OrderRepository
 from pos_app.core.domain.services.order import OrderService
-from pos_app.adapters.ui.gui.user import OrderUser
+from pos_app.adapters.ui.gui.user.order import OrderUser
 from pos_app.adapters.database.psql_adapter.repositories.category import CategoryRepository
 from pos_app.core.domain.services.category import CategoryService
-from pos_app.adapters.ui.gui.user import CategoryUser
+from pos_app.adapters.ui.gui.user.category import CategoryUser
 #Import Base database
 from pos_app.core.domain.models.base import metadata
 from pos_app.core.domain.models.customer import Customer
@@ -55,6 +26,9 @@ from pos_app.core.domain.models.table import Table
 from pos_app.core.domain.models.delivery import Delivery
 from pos_app.core.domain.models.order_detail import OrderDetail
 from pos_app.core.domain.models.category import Category
+# Import windows
+from pos_app.adapters.ui.gui.baseclass.home_window import HomeWindow
+from pos_app.adapters.ui.gui.baseclass.inventory_window import InventoryWindow
 # Load Main App
 class MainApp(MDApp):
     # init App
@@ -63,7 +37,6 @@ class MainApp(MDApp):
         self.title = "Artesana"
     # Build App
     def build(self):
-        # Window.bind(on_resize=self.on_window_resize)
         self.theme_cls.theme_styled_switch_animation = True
         self.theme_cls.theme_styled_switch_animation_duration = 0.2
         self.theme_cls.theme_style = "Light"
@@ -75,7 +48,7 @@ class MainApp(MDApp):
         category_repository = CategoryRepository(get_session())
         category_service = CategoryService(category_repository)
         category_user = CategoryUser(category_service)
-        return 
+        return None
     # Set Theme Style
     def switch_theme_style(self):
         if self.theme_cls.theme_style == "Dark":
