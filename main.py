@@ -42,12 +42,12 @@ class MainApp(MDApp):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Red"
         
-        order_repository = OrderRepository(get_session())
-        order_service = OrderService(order_repository)
-        order_user = OrderUser(order_service)
-        category_repository = CategoryRepository(get_session())
-        category_service = CategoryService(category_repository)
-        category_user = CategoryUser(category_service)
+        # order_repository = OrderRepository(get_session())
+        # order_service = OrderService(order_repository)
+        # order_user = OrderUser(order_service)
+        # category_repository = CategoryRepository(get_session())
+        # category_service = CategoryService(category_repository)
+        # category_user = CategoryUser(category_service)
         return None
     # Set Theme Style
     def switch_theme_style(self):
@@ -157,15 +157,15 @@ class MainApp(MDApp):
 #  Run App   
 if __name__ == "__main__":
 
-    Engine = get_engine()
-    metadata.create_all(Engine, tables=[Category.__table__,
-                                        Delivery.__table__,
-                                        Customer.__table__,
-                                        Order.__table__,
-                                        Payment.__table__,
-                                        Product.__table__,
-                                        Table.__table__,
-                                        OrderDetail.__table__])
+    # Engine = get_engine()
+    # metadata.create_all(Engine, tables=[Category.__table__,
+    #                                     Delivery.__table__,
+    #                                     Customer.__table__,
+    #                                     Order.__table__,
+    #                                     Payment.__table__,
+    #                                     Product.__table__,
+    #                                     Table.__table__,
+    #                                     OrderDetail.__table__])
 
     
     MainApp().run()
